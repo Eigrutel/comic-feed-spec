@@ -1,0 +1,258 @@
+--- Comic_Feed_1.0_Specification.md
++++ Comic_Feed_1.1_Specification.md
+@@ -1,10 +1,10 @@
+-# Comic Feed 1.0
++# Comic Feed 1.1
+ 
+ Spécification technique du protocole et de sa sortie RSS
+ 
+-Version du protocole : **1.0**. Édition : **5 octobre 2026**. Langue normative de cette édition : français.
+-
+-Ce document définit les données nécessaires pour publier et consommer un catalogue Comic Feed sans utiliser les applications Eigrutel. Il applique le cahier des charges de référence du 24 septembre 2026 et les précisions P1 à P7 validées le 5 octobre 2026. Il constitue le livrable technique de l’étape 1 ; il ne certifie pas encore les applications ni le parcours de conformité final multi-Publishers.
++Version du protocole : **1.1**. Édition : **8 octobre 2026**. Langue normative de cette édition : français.
++
++Ce document définit les données nécessaires pour publier et consommer un catalogue Comic Feed sans utiliser les applications Eigrutel. Il applique le cahier des charges de référence du 24 septembre 2026 et les précisions P1 à P7 validées le 5 octobre 2026. Cette édition consolide les ajouts Square et Pages validés le 8 octobre 2026. Elle ne certifie pas encore les applications ni le parcours de conformité final multi-Publishers. La version 1.0 demeure une édition distincte, applicable aux documents déclarant 1.0.
+ 
+ Le contenu est autonome : les règles utiles à l’implémentation figurent ici. Les exemples et schémas joints sont des aides, jamais une dépendance à un serveur. Aucune autorisation d’Eigrutel n’est requise pour implémenter le protocole. Cette spécification ne confère aucun droit de réutilisation sur les œuvres référencées par les Feed.
+ 
+@@ -12,7 +12,7 @@
+ 
+ **DOIT**, **NE DOIT PAS**, **OBLIGATOIRE** désignent une exigence. **DEVRAIT** désigne une recommandation dont une exception doit être justifiable. **PEUT** et **FACULTATIF** désignent une possibilité. Les tableaux de champs des sections 3 à 8 sont normatifs, même sans majuscules.
+ 
+-Un producteur émet les fichiers Feed. Un consommateur les interprète ; il peut être un Reader, un Collector, un outil d’import ou un validateur. Le protocole décrit les contenus et leurs relations, sans imposer l’interface du consommateur. Les réglages de Reader, projets privés d’Admin et sauvegardes personnelles de Collector ne sont pas des Feed.
++Un producteur émet les fichiers Feed. Un consommateur les interprète ; il peut être un Reader, un Collector, un outil d’import ou un validateur. Le protocole décrit les contenus et leurs relations, sans imposer l’interface du consommateur. Les réglages de Reader, projets privés d’Admin et sauvegardes personnelles de Collector ne sont pas des Feed. Les commandes, gestes, zooms, scopes de Reader et positions personnelles ne sont pas normalisés par ce document. Les comportements validés pour le Reader de référence sont consignés séparément dans READER_DECISIONS.md, sans conditionner la conformité d’un logiciel tiers.
+ 
+ Les sections 1 à 14 sont normatives. Les annexes sont informatives. En cas d’écart entre un schéma, un exemple et ces sections, les sections normatives prévalent et l’écart doit être corrigé. Les codes de diagnostic de la section 13 sont des identifiants documentaires stables de cette édition, pas des champs à ajouter aux Feed.
+ 
+@@ -72,7 +72,7 @@
+ 
+ ### 3.3 Ordre
+ 
+-L’ordre des membres d’un objet JSON n’a aucune signification. L’ordre des ressources d’une Publication webtoon est normatif. L’ordre des autres tableaux ne définit ni identité, ni nouveauté, ni accès. Un Reader choisit sa présentation ; pour une chronologie, il utilise publish_at et non l’ordre des fichiers ou updated_at. Il PEUT utiliser l’ID comme départage stable d’horodatages égaux.
++L’ordre des membres d’un objet JSON n’a aucune signification. L’ordre des ressources d’une Publication webtoon ou pages est normatif : il détermine l’ordre narratif des images, indépendamment de leur nom ou de leur URL. L’ordre des autres tableaux ne définit ni identité, ni nouveauté, ni accès. Un Reader choisit sa présentation ; pour une chronologie, il utilise publish_at et non l’ordre des fichiers ou updated_at. Il PEUT utiliser l’ID comme départage stable d’horodatages égaux.
+ 
+ ## 4 Feed Publisher
+ 
+@@ -81,7 +81,7 @@
+ | Champ | Type | Présence | Règle |
+ | --- | --- | --- | --- |
+ | protocol | Texte | O | Valeur exacte comic-feed. |
+-| version | Texte | O | Valeur exacte 1.0 pour un producteur V1.0 ; jamais un nombre JSON. |
++| version | Texte | O | Valeur exacte 1.1 pour un document produit selon cette édition ; jamais un nombre JSON. Voir section 12 pour les documents 1.0 conservés. |
+ | publisher | Objet Publisher | O | Identité du propriétaire technique du catalogue. |
+ | updated_at | Date | O | Dernière modification sémantique de ce Feed ; ce n’est pas l’heure de téléchargement. |
+ | series | Tableau d’entrées de Série | O | Index léger ; [] autorisé. Aucune liste de Publications à ce niveau. |
+@@ -130,7 +130,7 @@
+ | Champ | Type | Présence | Règle |
+ | --- | --- | --- | --- |
+ | protocol | Texte | O | Valeur exacte comic-feed. |
+-| version | Texte | O | Chaîne 1.0 pour un producteur V1.0. |
++| version | Texte | O | Chaîne 1.1 pour un document produit selon cette édition. Un Feed contenant square ou pages DOIT déclarer au moins la version qui définit ces types, ici 1.1. |
+ | series | Objet Série | O | Objet, et non tableau : un Feed Série décrit une seule Série. |
+ | publisher | Objet référence parent | O | Contient id et feed obligatoires. |
+ | publisher.id | ID Publisher | O | Doit correspondre au publisher.id du Feed parent. |
+@@ -175,7 +175,8 @@
+ | Champ relatif à channels[] | Type | Présence | Règle |
+ | --- | --- | --- | --- |
+ | id | ID Canal | O | Permanent. Un Canal appartient à une seule Série. |
+-| type | Texte fermé | O | strip ou webtoon en V1 ; permanent pour cet ID. |
++| type | Texte fermé | O | strip, square, webtoon ou pages en 1.1 ; permanent pour cet ID. |
++| reading_direction | Texte fermé | F | Autorisé uniquement sur un Canal pages. Valeurs ltr ou rtl ; ltr lorsque le champ est absent. Voir 6.2. |
+ | title | Texte | O | Nom public libre du Canal ; ne détermine pas son type. |
+ | language | Langue | F | Langue du Canal, recommandée par le cahier. |
+ | updated_at | Date | O | Change lorsque le Canal ou une de ses Publications change. |
+@@ -190,6 +191,26 @@
+ Un Canal withdrawn conserve ses champs obligatoires, y compris type et access, mais ses Publications ne sont plus proposées à la lecture. Il peut avoir publications: [].
+ 
+ Le Canal est l’unité de suivi des Publications. Un type inconnu est traité selon la section 12, sans interpréter son nom comme du code, un module ou une URL de moteur.
++
++### 6.1 Types et familles
++
++| Type | Unité de Publication et sens des ressources | Famille de données |
++| --- | --- | --- |
++| strip | Œuvre autonome, une image complète. | Publication à image unique. |
++| square | Gag ou BD autonome, d’intention carrée ou proche du carré, une image complète. | Même modèle que strip. |
++| webtoon | Épisode composé d’une ou plusieurs images ordonnées, destinées à un enchaînement vertical continu. | Publication à images ordonnées. |
++| pages | Épisode ou chapitre composé d’une ou plusieurs images ordonnées, chaque ressource représentant une page. | Même modèle que webtoon, destiné à une lecture paginée. |
++
++Ces familles décrivent le modèle commun ; aucun champ family n’est ajouté. Le type est une déclaration éditoriale du producteur. Il NE DOIT PAS être déduit automatiquement des proportions de l’image en remplacement de la valeur déclarée. Le protocole n’impose aucun ratio numérique pour square ; une image presque carrée n’est pas invalide. Les contrôles des formats et de la sécurité des images restent identiques pour les quatre types.
++
++Un chapitre Pages est une Publication, sans nouvel objet éditorial intermédiaire. Les pages sont ses ressources : elles ne reçoivent pas d’IDs itm_ distincts. Le type d’un Canal existant reste permanent ; le passage du protocole à 1.1 n’autorise pas à renommer strip en square ou webtoon en pages sur le même chn_.
++
++### 6.2 Sens de lecture Pages
++
++reading_direction est une chaîne sensible à la casse : ltr indique la lecture de gauche à droite, rtl celle de droite à gauche. Le champ est facultatif ; son absence sur un Canal pages signifie ltr. Une valeur présente mais inconnue, vide ou null est invalide : elle ne devient pas silencieusement ltr. Le champ n’est autorisé sur aucun autre type de Canal défini en 1.1.
++
++Le sens n’est pas déduit de la langue, du nom des fichiers ou de l’ordre alphabétique. Il NE DOIT PAS inverser le tableau resources : la première ressource reste la première page narrative pour ltr comme pour rtl. Le sens renseigne les conventions de lecture du consommateur ; ce document n’impose ni emplacement de boutons, ni touches, ni gestes. Une modification de reading_direction est une modification du Canal et suit la propagation de updated_at de la section 9.
++
+ 
+ ## 7 Publication et ressources
+ 
+@@ -225,7 +246,20 @@
+ | type | Texte fermé | O | image en V1. |
+ | src | Référence image | O | Référence externe au JSON ; jamais des octets encodés dans une chaîne. |
+ 
+-Pour une Publication non retirée dont resources est fourni, strip exige exactement une ressource ; webtoon exige au moins une ressource. L’ordre du tableau est l’ordre de lecture des segments webtoon. Aucun découpage automatique n’est décrit par le Feed.
++Pour une Publication non retirée dont resources est fourni, les cardinalités sont les suivantes :
++
++| Type de Canal | Nombre de ressources | Interprétation |
++| --- | --- | --- |
++| strip | Exactement 1. | Image de l’œuvre complète. |
++| square | Exactement 1. | Image du gag complet. |
++| webtoon | Au moins 1, sans plafond fixé par le protocole. | Images dans leur ordre narratif vertical. |
++| pages | Au moins 1, sans plafond fixé par le protocole. | Pages dans leur ordre narratif. |
++
++resources reste l’unique liste standard de ressources de lecture. Aucun tableau pages concurrent, champ de nombre de pages ou identifiant permanent de ressource n’est ajouté. Chaque ressource conserve les champs type et src ci-dessus, ainsi que la possibilité d’extensions prévue en section 12.
++
++L’ordre du tableau est l’ordre de lecture pour webtoon et pages. Un consommateur NE DOIT PAS le remplacer par un tri des noms de fichiers, des URLs ou des images téléchargées. Pour pages, la première ressource est la page 1, la dernière est la page N, et N est la longueur du tableau. reading_direction ne change pas ces positions. Le numéro est une position dans la version courante de la Publication, pas une identité permanente de page. Les mécanismes de reprise après modification sont des données locales d’application.
++
++Une Publication webtoon à une seule longue image reste pleinement valide. Le modèle à plusieurs images existait déjà en 1.0. Aucun découpage automatique d’une image n’est décrit par le Feed. Une miniature reste un visuel de repérage facultatif, distinct des ressources de lecture ; elle ne compte pas parmi les pages et son absence ne rend pas une Publication invalide.
+ 
+ Une Publication restricted peut omettre resources : le Feed ne révèle alors pas l’adresse des œuvres protégées. Pour éviter deux représentations du même cas, resources: [] est réservé aux retraits ; pour une annonce restreinte sans médias exposés, le champ est omis. Si des ressources restreintes sont annoncées, elles respectent les mêmes formats et cardinalités et la protection réelle reste à la charge de l’hébergement.
+ 
+@@ -383,11 +417,15 @@
+ 
+ ### 12.1 Version de protocole
+ 
+-protocol vaut exactement comic-feed. version est une chaîne majeur.mineur, sans zéro initial superflu : 1.0 pour cette édition. generated_by décrit un logiciel et ne détermine jamais la compatibilité.
+-
+-Un producteur 1.0 DOIT respecter les valeurs de cette édition. Les versions 1.x ajoutent des possibilités compatibles sans rendre obligatoires de nouveaux champs pour les documents existants. Une version majeure inconnue est signalée et son contenu n’est pas interprété comme 1.0. Une version mineure ultérieure est examinée avec les règles connues ; le client ne prétend pas certifier toute une version qu’il ne connaît pas.
+-
+-| Situation | Comportement du consommateur 1.0 |
++protocol vaut exactement comic-feed. version est une chaîne majeur.mineur, sans zéro initial superflu : 1.1 pour cette édition. generated_by décrit un logiciel et ne détermine jamais la compatibilité.
++
++Un producteur DOIT respecter les valeurs et règles de la version qu’il déclare. Les documents 1.0 déjà publiés restent valides selon l’édition 1.0 : aucune migration de leurs IDs, métadonnées ou ressources n’est imposée. La version 1.1 ajoute square et pages et le champ facultatif reading_direction des Canaux pages, sans nouveau champ obligatoire pour strip ou webtoon.
++
++Chaque document déclare sa propre version. Un Feed Publisher 1.0 PEUT indexer un Feed Série 1.1, et un Feed Publisher 1.1 PEUT indexer un Feed Série 1.0, à condition de conserver les concordances d’IDs, d’adresses, de statuts et de dates de la section 10. La présence d’un type nouveau dans une Série ne change pas la structure de l’index Publisher. Un Feed Série déclarant 1.1 PEUT réunir les quatre types. Déclarer square ou pages sous version 1.0 est non conforme à cette version.
++
++Les versions 1.x ajoutent des possibilités compatibles sans rendre obligatoires de nouveaux champs pour les documents existants. Une version majeure inconnue est signalée et son contenu n’est pas interprété comme une version 1.x connue. Une version mineure ultérieure est examinée avec les règles connues ; le client ne prétend pas certifier toute une version qu’il ne connaît pas.
++
++| Situation | Comportement du consommateur |
+ | --- | --- |
+ | Champ facultatif inconnu | Ignorer, éventuellement diagnostiquer ; ne pas l’exécuter. |
+ | Champ obligatoire connu absent | Objet invalide. |
+@@ -396,7 +434,9 @@
+ | Statut ou accès inconnu | Isoler l’objet affecté ; ne jamais supposer active, published ou public. |
+ | Version majeure incompatible | Refuser l’interprétation du Feed en conservant les données locales précédentes. |
+ 
+-Un type futur déclaré dans un document 1.0 ne respecte pas les valeurs de cette édition ; la tolérance du lecteur ne le rend pas conforme. Dans un document 1.x ultérieur, il est non pris en charge par ce lecteur, sans supposer que le producteur a violé cette version future.
++Ainsi, un consommateur 1.0 recevant une Série 1.1 conserve l’accès aux Canaux strip et webtoon qu’il sait lire, et isole square et pages. Il NE DOIT PAS les convertir silencieusement vers un type connu. Une interface PEUT signaler qu’un format n’est pas pris en charge ; un moteur ne se charge jamais depuis le Feed.
++
++Un type inconnu déclaré dans une version entièrement connue ne respecte pas les valeurs de cette édition ; la tolérance du lecteur ne le rend pas conforme. Dans un document d’une version mineure ultérieure, il est non pris en charge par ce lecteur, sans supposer que le producteur a violé cette version future. L’échec d’un schéma 1.0 appliqué directement à tout un document 1.1 n’est pas une justification pour rejeter l’ensemble du catalogue : validation du producteur et consommation partielle sont deux opérations distinctes.
+ 
+ ### 12.2 Logiciel générateur
+ 
+@@ -415,7 +455,7 @@
+ 
+ Une extension inconnue est ignorée. Une extension ne peut pas remplacer un champ obligatoire, changer l’accès effectif, rendre exécutable une donnée ni redéfinir le sens d’un champ standard. Un consommateur doit pouvoir interpréter le socle standard sans installer de code indiqué par le Feed.
+ 
+-Les champs facultatifs standards ajoutés dans une future version compatible sont ignorés par les anciens consommateurs. Un champ obligatoire connu absent reste une erreur ; un champ facultatif connu présent avec un type incorrect reste une erreur. Un producteur 1.0 place ses ajouts expérimentaux dans extensions.
++Les champs facultatifs standards ajoutés dans une future version compatible sont ignorés par les anciens consommateurs. Un champ obligatoire connu absent reste une erreur ; un champ facultatif connu présent avec un type incorrect reste une erreur. Un producteur place ses ajouts expérimentaux non définis par la version qu’il déclare dans extensions.
+ 
+ ## 13 Validation et sécurité
+ 
+@@ -424,6 +464,9 @@
+ Le contrôle se fait en couches : JSON et encodage ; enveloppe et version ; types et champs ; IDs, dates et cardinalités ; règles entre objets ; concordance entre documents ; transitions connues ; transport et fichiers réellement servis. Un validateur hors ligne doit annoncer les couches qu’il a effectivement vérifiées.
+ 
+ Les schémas JSON joints expriment la structure et plusieurs contraintes conditionnelles. Ils ne prouvent pas à eux seuls la validité du calendrier, BCP 47, l’absence de clés dupliquées avant décodage, la cohérence interdocuments, l’historique, le contenu réel des images ou CORS. Une option de validation format non activée ne vaut pas contrôle des dates.
++
++Pour 1.1, le contrôle ajoute les deux types, leur cardinalité et le périmètre de reading_direction. Un ratio d’image Square ou un nombre de pages supérieur à 8, 16 ou 24 ne sont pas des motifs de refus. Une limite de ressources propre à un consommateur relève de sa capacité, pas d’une invalidité du Feed. Les valeurs de démonstration, une omission de titre ou l’absence de miniature ne sont pas des erreurs si les autres conditions sont respectées. Un ordre narratif peut être contrôlé par comparaison à un corpus attendu ; il ne se déduit pas automatiquement du contenu graphique.
++
+ 
+ ### 13.2 Diagnostics
+ 
+@@ -434,6 +477,7 @@
+ | CF_REQUIRED | Champ obligatoire absent. | Objet concerné ; Feed si enveloppe. |
+ | CF_TYPE | Mauvais type ou null non autorisé. | Objet concerné. |
+ | CF_ENUM | Valeur fermée non conforme à la version déclarée. | Objet concerné. |
++| CF_FIELD_SCOPE | Champ standard hors de son périmètre autorisé, par exemple reading_direction sur un Canal autre que pages en 1.1. | Canal concerné. |
+ | CF_ID | Préfixe ou UUID v4 incorrect. | Objet concerné. |
+ | CF_DUPLICATE_ID | Définition multiple du même ID dans un état cohérent. | Définitions et relations concernées. |
+ | CF_DATE | Date syntaxiquement ou civilement invalide. | Objet concerné. |
+@@ -501,7 +545,7 @@
+ | item/title | O | Titre si non vide ; sinon libellé composé du titre du Canal et de la date publish_at. |
+ | item/link | O | URL absolue de publications[].url. |
+ | item/pubDate | O | publish_at, converti en date RSS UTC avec année à quatre chiffres. |
+-| item/description | F | Présentation sûre, éventuellement miniature et lien de lecture. |
++| item/description | C | Présentation sûre ; obligatoire pour le profil Square et Pages détaillé en 14.4, facultative pour les autres types. |
+ 
+ Les dates sont rendues comme Mon, 05 Oct 2026 10:00:00 GMT, avec les noms de jour et mois anglais corrects ; les fractions de seconde sont omises. L’ordre peut utiliser la précision complète de Comic Feed, même si RSS n’affiche que la seconde. Le GUID ne change ni lors d’une correction ni lors d’un déplacement du site.
+ 
+@@ -509,7 +553,20 @@
+ 
+ Les titres et métadonnées sont échappés pour XML. Si le générateur compose une description HTML, il doit d’abord échapper les textes provenant du Feed pour HTML, puis sérialiser ce fragment comme texte XML ou CDATA. Une description du Feed n’est jamais copiée comme balisage de confiance. Le choix CDATA ne rend pas sûr un script ou un attribut actif.
+ 
+-Le profil de référence emploie une description textuelle simple et peut ajouter une miniature PNG/JPEG avec un lien absolu. Il n’exige ni Media RSS ni extension Comic Feed. La lecture ordinaire repose sur item/link : un agrégateur n’est pas tenu d’intégrer les images, WebP ou les longs épisodes. Un enclosure est facultatif et n’est utilisable que si son URL, son type MIME et sa longueur réelle en octets sont connus ; il ne représente pas à lui seul un épisode segmenté. L’élément channel/image facultatif reste soumis aux formats et dimensions du standard RSS, distincts des visuels Comic Feed.
++Pour strip et webtoon, le profil de référence conserve la description textuelle simple et la possibilité d’ajouter une miniature PNG/JPEG avec un lien absolu. Les règles propres à square et pages sont précisées ci-dessous. Il n’exige ni Media RSS ni extension Comic Feed. La lecture ordinaire repose sur item/link : un agrégateur n’est pas tenu d’intégrer les images, WebP ou les longs épisodes. Un enclosure est facultatif et n’est utilisable que si son URL, son type MIME et sa longueur réelle en octets sont connus ; il ne représente pas à lui seul un épisode segmenté. L’élément channel/image facultatif reste soumis aux formats et dimensions du standard RSS, distincts des visuels Comic Feed.
++
++La sortie des nouveaux types utilise les mêmes éléments RSS et les mêmes règles de sélection, d’échappement et de dates :
++
++| Type | Un item représente | Contenu de la description |
++| --- | --- | --- |
++| square | Une Publication, donc un gag complet. | Référence à l’image complète resources[0].src et lien vers publications[].url, dans un fragment HTML sûr sérialisé en texte XML ou CDATA. |
++| pages | Une Publication, donc un chapitre complet. | Annonce et lien vers publications[].url, avec la miniature thumbnail si elle est présente. |
++
++Pour square, le générateur DOIT inclure l’image complète du gag dans la description de l’item ; le consommateur RSS reste libre de l’afficher ou non. Pour pages, le générateur NE DOIT PAS insérer automatiquement les ressources de lecture du chapitre dans le RSS, ni créer un item par page. Sans thumbnail, il produit une annonce textuelle avec le lien ; il ne choisit pas automatiquement une page comme visuel de remplacement. Une miniature choisie par l’auteur peut évidemment représenter une page, dès lors qu’elle est déclarée dans thumbnail.
++
++Le champ thumbnail demeure facultatif dans Comic Feed. L’exigence de description concerne la sortie RSS Square/Pages lorsqu’elle est générée, et non la validité d’une Publication sans RSS. Le titre de repli reste le titre du Canal et la date : aucun nom technique de fichier n’est utilisé. Toutes les URLs d’images et de liens du fragment sont absolues et suivent les mêmes contrôles que les autres ressources.
++
++Les métadonnées Media RSS sont un complément facultatif ; aucune n’est nécessaire à la validité de ce profil. Leur emploi ne permet pas d’exposer des ressources exclues de la description : pour pages, les visuels diffusés restent ceux de la miniature déclarée. Aucun item, lien média, miniature ou enclosure d’une Publication d’accès effectif restricted ne doit être exporté dans ce RSS, même sous un Canal public. Les règles existantes de strip et webtoon sont conservées.
+ 
+ ### 14.5 Programmation et corrections
+ 
+@@ -517,27 +574,37 @@
+ 
+ Une correction met à jour l’élément existant en conservant guid et pubDate. Une mention textuelle de correction PEUT être incluse ; le profil ne promet pas qu’un agrégateur la signalera. Un retrait supprime l’élément du RSS régénéré, mais ne peut forcer la suppression des copies déjà archivées par les agrégateurs. Aucun nouvel item de retrait n’est créé par ce profil. Comic Feed reste la source des états structurés.
+ 
+-## Annexe A Catalogue des exemples
+-
+-Le dossier demo contient trois Publishers indépendants : Atelier Aube, Éditions Brume et Studio Rivage. Les domaines .example sont réservés à l’illustration et ne correspondent pas à des sites hébergés. mapping.json associe chaque URL canonique fictive à son dossier local ; ce fichier est un outil de démonstration, pas un champ ni une dépendance du protocole.
+-
+-Aube illustre plusieurs Séries, un Canal strip et un Canal webtoon publics, une programmation, une correction signalée, un retrait minimal et une Série à accès mixte. Brume illustre deux Canaux webtoon de la même Série et des URLs absolues. Rivage illustre l’inactivité, les surcharges d’accès et un ancien Feed moved qui mène à son emplacement courant avec le même ID.
+-
+-Les fichiers scenarios présentent des versions successives de documents existants, avec un contexte de résolution et des résultats attendus dans manifest.json. Les scénarios incluent programmation avant/après échéance, correction silencieuse, correction signalée et retrait. Les IDs conservés y sont intentionnels. Les dossiers invalid et compatibility sont distincts des références valides.
+-
+-## Annexe B Exemples invalides
+-
+-invalid/manifest.json décrit chaque exemple et le diagnostic principal attendu, ainsi que son contexte et, si nécessaire, le document parent ou l’état antérieur. Les cas syntaxiques sont stockés avec l’extension .invalid.json pour être inspectables sans être confondus avec des références valides. Les cas compatibility décrivent une capacité de lecture ; ils ne sont pas présentés comme des erreurs JSON.
+-
+-## Annexe C Arborescence et utilisation
+-
+-README.md décrit l’ouverture de SPECIFICATION.html, les dossiers de chaque Publisher et les emplacements de médias. Les images sont des fichiers de test sans œuvre réelle. Les pages HTML sont des cibles factices pour les URLs de lecture RSS, sans application Reader.
+-
+-Les chemins sont relatifs à l’intérieur des packages quand cela est pertinent. Pour un hébergement réel, les URLs absolues fictives et le contenu absolu des RSS doivent être remplacés ou régénérés à partir des véritables bases. Les tests HTTPS/CORS sur plusieurs origines réelles relèvent de l’étape de déploiement et ne sont pas prouvés par l’ouverture des fichiers locaux.
++## Annexe A Exemples complets 1.1
++
++Le dossier examples contient un Publisher fictif et deux Feed Série complets. Le Publisher demeure en 1.0 pour illustrer l’interopérabilité document par document. La Série quatre-formats contient strip, square, webtoon et pages ; la seconde Série illustre Pages en rtl. Un épisode Webtoon contient une image, un autre deux images. Les chapitres Pages contiennent huit et deux images ; la liste de l’exemple rtl utilise volontairement un ordre différent de l’ordre alphabétique des fichiers.
++
++Les noms éditoriaux et dates sont entièrement fictifs. Les IDs d’exemples sont des UUID v4 préfixés valides ; ils n’identifient pas les œuvres SPOON ou CUVIER. Les URLs .example et les emplacements de médias sont documentaires et ne sont pas déployés. Les fichiers JSON sont complets et contrôlés dans le périmètre structurel et sémantique annoncé ; l’existence des médias et le transport Web restent non vérifiés.
++
++Deux RSS illustrent un gag Square avec image complète et deux chapitres Pages, dont un sans miniature. Ils utilisent l’instant de démonstration 2026-10-08T12:00:00Z. La Publication Square future et la Publication restreinte sont exclues. Le corpus réel SPOON/CUVIER et son ZIP de déploiement relèvent de l’étape A4.
++
++Les fichiers cases/valid, cases/invalid et cases/compatibility sont des états alternatifs destinés aux tests : ne pas les fusionner dans un catalogue. Leurs contextes et résultats attendus figurent dans cases/manifest.json.
++
++## Annexe B Références 1.0 conservées
++
++reference-1.0 contient, sans modification, les livrables de l’édition 1.0 : trois Publishers indépendants, cinq Feed Série, leurs médias factices, RSS, scénarios, exemples invalides et schémas. Leurs horodatages, IDs et résultats historiques restent ceux de l’édition du 5 octobre. Les domaines .example correspondent à des origines documentaires, pas à trois hébergements effectivement testés.
++
++Le rapport VERIFICATION.md de cette livraison distingue les contrôles exécutés à nouveau, les vérifications propres à l’extension et les limites non testées. Un ancien diagnostic ou rapport présent sous reference-1.0 n’est pas automatiquement un test de la 1.1.
++
++## Annexe C Documents d’accompagnement
++
++- SPECIFICATION.md et SPECIFICATION.html : texte du protocole 1.1.
++- CHANGES.md et CHANGES.diff : changements par rapport à la 1.0.
++- schemas/ : schémas structurels 1.1 ; ceux de 1.0 restent dans reference-1.0/schemas.
++- examples/ : Feed complets et deux RSS documentaires de l’extension.
++- cases/ : cas valides, invalides et de compatibilité.
++- READER_DECISIONS.md : décisions validées pour les applications de référence, hors conformité du protocole.
++- VERIFICATION.md et VERIFICATION.json : résultats et limites des contrôles.
++
++Les scopes Publisher/Série/Canal/channel_type, l’aléatoire, le zoom, les raccourcis et les positions de lecture appartiennent aux applications. L’Admin, le Reader et le Collector ne sont ni livrés ni modifiés par ce dossier de spécification. Le nom de version 1.1 désigne le protocole, pas le logiciel Reader 0.8.7.
+ 
+ ## Annexe D Références et provenance
+ 
+-Le cahier des charges Comic Feed 1.0 du 24 septembre 2026, la décision RSS et les précisions P1 à P7 validées le 5 octobre constituent la provenance de cette édition. Le lecteur n’a pas besoin du cahier pour appliquer les règles ci-dessus.
++Le cahier des charges Comic Feed 1.0 du 24 septembre 2026, les précisions P1 à P7 validées le 5 octobre et les décisions Square/Pages validées point par point le 8 octobre constituent la provenance de cette édition. Le lecteur n’a pas besoin de ces conversations pour appliquer les règles ci-dessus.
+ 
+ - [RFC 8259 JSON](https://www.rfc-editor.org/rfc/rfc8259).
+ - [RFC 3339 Dates Internet](https://www.rfc-editor.org/rfc/rfc3339), selon le profil explicite de la section 3.
