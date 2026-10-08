@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version="2.0">
+  <channel>
+    <title>Brume haute / episodes-en</title>
+    <link>https://brume.example/series/brume-haute/channels/episodes-en/index.html</link>
+    <description>Série fictive destinée à vérifier les échanges Comic Feed.</description>
+    <language>en</language>
+    <lastBuildDate>Mon, 05 Oct 2026 10:00:00 GMT</lastBuildDate>
+    <item>
+      <guid isPermaLink="false">itm_6d11367f-1805-4e08-9c44-231142ac3436</guid>
+      <title>Exemple brume-segments</title>
+      <link>https://brume.example/series/brume-haute/channels/webtoon/read/brume-segments.html</link>
+      <pubDate>Thu, 01 Oct 2026 08:00:00 GMT</pubDate>
+      <description>Exemple de publication Comic Feed. </description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "publisher": {
+    "id": "pub_16fb77eb-272d-4781-9bf7-e7e65c9bb2b1",
+    "name": "Éditions Brume",
+    "description": "Publisher indépendant fictif.",
+    "language": "fr",
+    "url": "index.html",
+    "images": {
+      "avatar": "images/avatar.png",
+      "banner": "images/banner.webp"
+    }
+  },
+  "updated_at": "2026-10-05T10:00:00Z",
+  "series": [
+    {
+      "id": "ser_544d6c7e-9059-4b2e-a663-74ff7c210030",
+      "title": "Brume haute",
+      "feed": "https://brume.example/series/brume-haute/feed.json",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "thumbnail": "series/brume-haute/images/cover.png"
+    }
+  ]
+}

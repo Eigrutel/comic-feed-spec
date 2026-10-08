@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version="2.0">
+  <channel>
+    <title>Les Lucioles / webtoons</title>
+    <link>https://aube.example/bd/series/les-lucioles/channels/webtoons/index.html</link>
+    <description>Série fictive destinée à vérifier les échanges Comic Feed.</description>
+    <language>fr</language>
+    <lastBuildDate>Mon, 05 Oct 2026 10:00:00 GMT</lastBuildDate>
+    <item>
+      <guid isPermaLink="false">itm_515cd34e-884e-44d9-b2e2-08901073f43c</guid>
+      <title>Exemple aube-episode-01</title>
+      <link>https://aube.example/bd/series/les-lucioles/channels/webtoon/read/aube-episode-01.html</link>
+      <pubDate>Thu, 01 Oct 2026 08:00:00 GMT</pubDate>
+      <description>Exemple de publication Comic Feed. </description>
+    </item>
+    <item>
+      <guid isPermaLink="false">itm_4909d52b-5a12-4d8b-8205-5e4fa14126b6</guid>
+      <title>Exemple aube-episode-02</title>
+      <link>https://aube.example/bd/series/les-lucioles/channels/webtoon/read/aube-episode-02.html</link>
+      <pubDate>Thu, 01 Oct 2026 08:00:00 GMT</pubDate>
+      <description>Exemple de publication Comic Feed. </description>
+    </item>
+  </channel>
+</rss>

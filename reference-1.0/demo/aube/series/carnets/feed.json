@@ -1,0 +1,77 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "series": {
+    "id": "ser_da741ed9-8832-40c7-ac0c-c64de1ea4389",
+    "title": "Carnets des marges",
+    "description": "Série fictive destinée à vérifier les échanges Comic Feed.",
+    "language": "fr",
+    "images": {
+      "cover": "images/cover.png",
+      "banner": "images/banner.webp"
+    },
+    "credits": [
+      {
+        "name": "Alex Exemple",
+        "role": "Dessin",
+        "id": "credit-local-1"
+      },
+      {
+        "name": "Camille Démo",
+        "role": "Scénario"
+      }
+    ],
+    "content_rating": "Public averti",
+    "content_warning": "Thèmes adultes fictifs."
+  },
+  "publisher": {
+    "id": "pub_d628cd5f-9064-4958-be04-9977f72d4181",
+    "feed": "../../feed.json"
+  },
+  "updated_at": "2026-10-05T10:00:00Z",
+  "channels": [
+    {
+      "id": "chn_5161af63-df41-4a79-827e-0011965035ef",
+      "type": "strip",
+      "title": "carnets",
+      "language": "fr",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "access": {
+        "mode": "mixed"
+      },
+      "publications": [
+        {
+          "id": "itm_02ac9543-4c88-4cf8-939b-cb322138511b",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple carnet-public",
+          "thumbnail": "channels/strip/thumbnails/carnet-public.png",
+          "url": "channels/strip/read/carnet-public.html",
+          "access": {
+            "mode": "public"
+          },
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/strip/media/carnet-public-01.png"
+            }
+          ],
+          "content_warning": "Aucune image explicite dans cet exemple."
+        },
+        {
+          "id": "itm_922f8b7a-778b-4308-a1f1-fc52d08799c7",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple carnet-reserve",
+          "thumbnail": "channels/strip/thumbnails/carnet-reserve.png",
+          "url": "channels/strip/read/carnet-reserve.html",
+          "access": {
+            "mode": "restricted"
+          }
+        }
+      ]
+    }
+  ]
+}

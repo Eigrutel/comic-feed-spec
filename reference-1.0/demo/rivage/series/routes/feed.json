@@ -1,0 +1,88 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "series": {
+    "id": "ser_1b6fc613-8b8c-426b-a62f-6ba4067ec049",
+    "title": "Routes de papier",
+    "description": "Série fictive destinée à vérifier les échanges Comic Feed.",
+    "language": "fr",
+    "images": {
+      "cover": "images/cover.png",
+      "banner": "images/banner.webp"
+    },
+    "credits": [
+      {
+        "name": "Alex Exemple",
+        "role": "Dessin",
+        "id": "credit-local-1"
+      },
+      {
+        "name": "Camille Démo",
+        "role": "Scénario"
+      }
+    ]
+  },
+  "publisher": {
+    "id": "pub_834ddb11-589a-4c28-b7d3-200dcd190a4e",
+    "feed": "../../feed.json"
+  },
+  "updated_at": "2026-10-05T10:00:00Z",
+  "channels": [
+    {
+      "id": "chn_60b79d3b-47df-4641-a931-ee972bd11298",
+      "type": "strip",
+      "title": "edition-reservee",
+      "language": "fr",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "access": {
+        "mode": "restricted"
+      },
+      "publications": [
+        {
+          "id": "itm_002ea818-697e-43a9-adcf-701fb9faac05",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple rivage-extrait",
+          "thumbnail": "channels/strip/thumbnails/rivage-extrait.png",
+          "url": "channels/strip/read/rivage-extrait.html",
+          "access": {
+            "mode": "public"
+          },
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/strip/media/rivage-extrait-01.png"
+            }
+          ]
+        },
+        {
+          "id": "itm_a184e39d-64e3-40f7-81b7-902a627a404e",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple rivage-reserve",
+          "thumbnail": "channels/strip/thumbnails/rivage-reserve.png",
+          "url": "channels/strip/read/rivage-reserve.html",
+          "access": {
+            "mode": "restricted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "chn_f6581eac-6522-4b52-bf08-2f561edca306",
+      "type": "strip",
+      "title": "ancienne-edition",
+      "language": "fr",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [],
+      "url": "channels/ancienne-edition/index.html",
+      "rss": "channels/ancienne-edition/rss.xml",
+      "status": "withdrawn"
+    }
+  ]
+}

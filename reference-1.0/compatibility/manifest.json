@@ -1,0 +1,19 @@
+{
+  "cases": [
+    {
+      "file": "compatibility/mineure-future.json",
+      "expected": "KNOWN_SUBSET",
+      "action": "Lire le socle connu, sans certifier toute la version 1.1."
+    },
+    {
+      "file": "compatibility/type-futur.json",
+      "expected": "UNSUPPORTED",
+      "action": "Isoler le premier Canal, lire le second."
+    },
+    {
+      "file": "compatibility/majeure-future.json",
+      "expected": "UNSUPPORTED",
+      "action": "Refuser l’interprétation et conserver la bibliothèque locale."
+    }
+  ]
+}

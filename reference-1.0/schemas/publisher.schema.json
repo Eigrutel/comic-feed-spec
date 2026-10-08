@@ -1,0 +1,707 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comic-feed.example/schemas/publisher-1.0.schema.json",
+  "title": "Comic Feed 1.0 publisher",
+  "$comment": "Schéma structurel informatif. Compléter avec les règles sémantiques, interdocuments et réseau de SPECIFICATION.md.",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "const": "comic-feed"
+    },
+    "version": {
+      "const": "1.0"
+    },
+    "publisher": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^pub_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "images": {
+          "type": "object",
+          "properties": {
+            "avatar": {
+              "type": "string",
+              "minLength": 1
+            },
+            "banner": {
+              "type": "string",
+              "minLength": 1
+            },
+            "extensions": {
+              "type": "object",
+              "propertyNames": {
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "required": [],
+          "additionalProperties": true
+        },
+        "status": {
+          "enum": [
+            "active",
+            "inactive",
+            "moved"
+          ]
+        },
+        "moved_to": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "moved"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "moved_to"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "moved_to"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^ser_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "title": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "feed": {
+            "type": "string",
+            "minLength": 1
+          },
+          "updated_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "thumbnail": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "active",
+              "withdrawn"
+            ]
+          },
+          "extensions": {
+            "type": "object",
+            "propertyNames": {
+              "minLength": 1
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "feed",
+          "updated_at"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "generated_by": {
+      "$ref": "#/$defs/generated"
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "protocol",
+    "version",
+    "publisher",
+    "updated_at",
+    "series"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "generated": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": true
+    },
+    "credit": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "role": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": true
+    },
+    "notice": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "message": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "at",
+        "message"
+      ],
+      "additionalProperties": true
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "image"
+        },
+        "src": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "src"
+      ],
+      "additionalProperties": true
+    },
+    "access": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "public",
+            "restricted"
+          ]
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": true
+    },
+    "publication": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^itm_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "status": {
+          "enum": [
+            "scheduled",
+            "published",
+            "withdrawn"
+          ]
+        },
+        "publish_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "updated_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resource"
+          }
+        },
+        "access": {
+          "$ref": "#/$defs/access"
+        },
+        "update_notice": {
+          "$ref": "#/$defs/notice"
+        },
+        "content_rating": {
+          "type": "string"
+        },
+        "content_warning": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "updated_at"
+      ],
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "scheduled",
+                  "published"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "publish_at"
+            ],
+            "properties": {
+              "resources": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "status": {
+                    "enum": [
+                      "scheduled",
+                      "published"
+                    ]
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              {
+                "properties": {
+                  "access": {
+                    "properties": {
+                      "mode": {
+                        "const": "public"
+                      }
+                    },
+                    "required": [
+                      "mode"
+                    ]
+                  }
+                },
+                "required": [
+                  "access"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "resources"
+            ]
+          }
+        }
+      ]
+    },
+    "channel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^chn_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "type": {
+          "enum": [
+            "strip",
+            "webtoon"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "updated_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "access": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "enum": [
+                "public",
+                "restricted",
+                "mixed"
+              ]
+            },
+            "extensions": {
+              "type": "object",
+              "propertyNames": {
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": true
+        },
+        "publications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/publication"
+          }
+        },
+        "status": {
+          "enum": [
+            "active",
+            "withdrawn"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rss": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "title",
+        "updated_at",
+        "access",
+        "publications"
+      ],
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "strip"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "publications": {
+                "items": {
+                  "if": {
+                    "properties": {
+                      "status": {
+                        "enum": [
+                          "scheduled",
+                          "published"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "status"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "resources": {
+                        "maxItems": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "access": {
+                "properties": {
+                  "mode": {
+                    "const": "mixed"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "publications": {
+                "items": {
+                  "if": {
+                    "properties": {
+                      "status": {
+                        "enum": [
+                          "scheduled",
+                          "published"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "status"
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "access"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "access": {
+                "properties": {
+                  "mode": {
+                    "const": "public"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "publications": {
+                "items": {
+                  "if": {
+                    "allOf": [
+                      {
+                        "properties": {
+                          "status": {
+                            "enum": [
+                              "scheduled",
+                              "published"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "status"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "required": [
+                            "access"
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "resources"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "rss"
+            ]
+          },
+          "then": {
+            "required": [
+              "url"
+            ],
+            "properties": {
+              "access": {
+                "properties": {
+                  "mode": {
+                    "const": "public"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

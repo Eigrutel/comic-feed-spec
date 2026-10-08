@@ -1,0 +1,94 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "series": {
+    "id": "ser_544d6c7e-9059-4b2e-a663-74ff7c210030",
+    "title": "Brume haute",
+    "description": "Série fictive destinée à vérifier les échanges Comic Feed.",
+    "language": "fr",
+    "images": {
+      "cover": "images/cover.png",
+      "banner": "images/banner.webp"
+    },
+    "credits": [
+      {
+        "name": "Alex Exemple",
+        "role": "Dessin",
+        "id": "credit-local-1"
+      },
+      {
+        "name": "Camille Démo",
+        "role": "Scénario"
+      }
+    ]
+  },
+  "publisher": {
+    "id": "pub_16fb77eb-272d-4781-9bf7-e7e65c9bb2b1",
+    "feed": "https://brume.example/feed.json"
+  },
+  "updated_at": "2026-10-05T10:00:00Z",
+  "channels": [
+    {
+      "id": "chn_33e92f24-d888-4ae8-99d2-bb57fe5b7dba",
+      "type": "webtoon",
+      "title": "episodes-fr",
+      "language": "fr",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_20f90569-d7ad-4df7-8f2d-f15c1b75a303",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00.125Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple brume-long",
+          "thumbnail": "channels/webtoon/thumbnails/brume-long.png",
+          "url": "channels/webtoon/read/brume-long.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "https://brume.example/series/brume-haute/channels/webtoon/media/brume-long-01.jpg"
+            }
+          ]
+        }
+      ],
+      "url": "channels/episodes-fr/index.html",
+      "rss": "channels/episodes-fr/rss.xml"
+    },
+    {
+      "id": "chn_95bb736b-24f5-49b2-8235-e900ab4ecf35",
+      "type": "webtoon",
+      "title": "episodes-en",
+      "language": "en",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_6d11367f-1805-4e08-9c44-231142ac3436",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple brume-segments",
+          "thumbnail": "channels/webtoon/thumbnails/brume-segments.png",
+          "url": "channels/webtoon/read/brume-segments.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/webtoon/media/brume-segments-01.png"
+            },
+            {
+              "type": "image",
+              "src": "channels/webtoon/media/brume-segments-02.png"
+            }
+          ]
+        }
+      ],
+      "url": "channels/episodes-en/index.html",
+      "rss": "channels/episodes-en/rss.xml"
+    }
+  ]
+}
