@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version="2.0">
+  <channel>
+    <title>Quatre formats — démonstration — Gags de démonstration</title>
+    <link>https://atelier-demo.example/series/quatre-formats/lecture/gags.html</link>
+    <description>Exemple fictif Comic Feed 1.1 ; images documentaires non déployées.</description>
+    <language>fr</language>
+    <lastBuildDate>Thu, 08 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Gags de démonstration — 2026-10-02</title>
+      <guid isPermaLink="false">itm_48f1cb9a-2c08-45d7-9ec7-627d3d015534</guid>
+      <link>https://atelier-demo.example/series/quatre-formats/lecture/gag-01.html</link>
+      <pubDate>Fri, 02 Oct 2026 08:00:00 GMT</pubDate>
+      <description>&lt;p&gt;Gags de démonstration — 2026-10-02&lt;/p&gt;&lt;p&gt;&lt;a href="https://atelier-demo.example/series/quatre-formats/lecture/gag-01.html"&gt;&lt;img src="https://atelier-demo.example/series/quatre-formats/media/gag-complet.jpg" alt="Gags de démonstration — 2026-10-02"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://atelier-demo.example/series/quatre-formats/lecture/gag-01.html"&gt;Lire la publication&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

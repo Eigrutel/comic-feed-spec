@@ -1,0 +1,45 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.1",
+  "series": {
+    "id": "ser_422fb088-99bf-4b6a-91f5-a4a44374a122",
+    "title": "Sens de lecture — démonstration",
+    "description": "Exemple technique fictif. Noms, titres et dates de démonstration ; médias non déployés.",
+    "language": "fr"
+  },
+  "publisher": {
+    "id": "pub_1c79845b-0e4c-49a9-8dee-bc1355766f28",
+    "feed": "../../feed.json"
+  },
+  "updated_at": "2026-10-08T12:00:00Z",
+  "channels": [
+    {
+      "id": "chn_b7adb360-0f71-491b-a60f-f1440ad13741",
+      "type": "pages",
+      "title": "Lecture de droite à gauche",
+      "updated_at": "2026-10-08T12:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_d89770df-1b55-4522-9b24-f10f8a062810",
+          "status": "published",
+          "publish_at": "2026-10-05T08:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/z-premiere.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/a-deuxieme.jpg"
+            }
+          ]
+        }
+      ],
+      "reading_direction": "rtl"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "base_url": "https://atelier-demo.example/series/quatre-formats/feed.json",
+  "notice": "Variantes de test, pas des Séries à fusionner. Relations au Publisher non contrôlées pour ces mutations.",
+  "cases": [
+    {
+      "file": "cases/valid/pages-direction-omise.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/valid/pages-une-image.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/valid/pages-trente-trois-images.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/valid/pages-restricted-sans-ressources.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/valid/pages-retrait-minimal.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/valid/square-retrait-vide.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/valid/square-sans-miniature-titre.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/valid/extension-inconnue.json",
+      "schema_valid": true
+    },
+    {
+      "file": "cases/invalid/square-deux-images.json",
+      "schema_valid": false,
+      "expected": "CF_RESOURCE_COUNT"
+    },
+    {
+      "file": "cases/invalid/square-aucune-image.json",
+      "schema_valid": false,
+      "expected": "CF_RESOURCE_COUNT"
+    },
+    {
+      "file": "cases/invalid/pages-aucune-image.json",
+      "schema_valid": false,
+      "expected": "CF_RESOURCE_COUNT"
+    },
+    {
+      "file": "cases/invalid/pages-public-sans-ressources.json",
+      "schema_valid": false,
+      "expected": "CF_RESOURCE_COUNT"
+    },
+    {
+      "file": "cases/invalid/pages-restricted-vide.json",
+      "schema_valid": false,
+      "expected": "CF_RESOURCE_COUNT"
+    },
+    {
+      "file": "cases/invalid/pages-direction-inconnue.json",
+      "schema_valid": false,
+      "expected": "CF_ENUM"
+    },
+    {
+      "file": "cases/invalid/pages-direction-majuscules.json",
+      "schema_valid": false,
+      "expected": "CF_ENUM"
+    },
+    {
+      "file": "cases/invalid/pages-direction-null.json",
+      "schema_valid": false,
+      "expected": "CF_TYPE"
+    },
+    {
+      "file": "cases/invalid/direction-sur-strip.json",
+      "schema_valid": false,
+      "expected": "CF_FIELD_SCOPE"
+    },
+    {
+      "file": "cases/invalid/direction-sur-square.json",
+      "schema_valid": false,
+      "expected": "CF_FIELD_SCOPE"
+    },
+    {
+      "file": "cases/invalid/direction-sur-webtoon.json",
+      "schema_valid": false,
+      "expected": "CF_FIELD_SCOPE"
+    },
+    {
+      "file": "cases/invalid/nouveaux-types-sous-1-0.json",
+      "schema_valid": false,
+      "expected": "CF_ENUM"
+    },
+    {
+      "file": "cases/invalid/type-inconnu-sous-1-1.json",
+      "schema_valid": false,
+      "expected": "CF_ENUM"
+    },
+    {
+      "file": "cases/invalid/pages-champ-double-ne-remplace-pas-resources.json",
+      "schema_valid": false,
+      "expected": "CF_RESOURCE_COUNT"
+    },
+    {
+      "file": "cases/invalid/pages-ressource-sans-src.json",
+      "schema_valid": false,
+      "expected": "CF_REQUIRED"
+    },
+    {
+      "file": "cases/invalid/pages-ressource-html.json",
+      "schema_valid": false,
+      "expected": "CF_ENUM"
+    },
+    {
+      "file": "cases/invalid/pages-brouillon-diffuse.json",
+      "schema_valid": false,
+      "expected": "CF_ENUM"
+    },
+    {
+      "file": "cases/invalid/pages-mixed-sans-acces.json",
+      "schema_valid": false,
+      "expected": "CF_MIXED_ACCESS"
+    },
+    {
+      "file": "cases/invalid/pages-rss-canal-restricted.json",
+      "schema_valid": false,
+      "expected": "CF_RSS_POLICY"
+    },
+    {
+      "file": "cases/compatibility/lecture-partielle-client-1-0.json",
+      "schema_valid": true,
+      "consumer": {
+        "known_types": [
+          "strip",
+          "webtoon"
+        ],
+        "kept_types": [
+          "strip",
+          "webtoon"
+        ],
+        "isolated_types": [
+          "square",
+          "pages"
+        ]
+      }
+    },
+    {
+      "file": "cases/compatibility/type-futur-sous-1-2.json",
+      "schema_valid": null,
+      "consumer": {
+        "known_types": [
+          "strip",
+          "square",
+          "webtoon",
+          "pages"
+        ],
+        "kept_types": [
+          "strip",
+          "square",
+          "webtoon"
+        ],
+        "isolated_types": [
+          "panorama"
+        ],
+        "status": "UNSUPPORTED_SUBSET_NOT_CERTIFIED"
+      }
+    }
+  ]
+}

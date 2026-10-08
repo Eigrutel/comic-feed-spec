@@ -1,0 +1,26 @@
+[
+  {
+    "file": "cases/invalid/rss-square-futur.xml",
+    "series": "examples/atelier/series/quatre-formats/feed.json",
+    "channel_id": "chn_15c41e3d-52aa-4501-9baf-3083075f0edd",
+    "expected": "CF_RSS_POLICY"
+  },
+  {
+    "file": "cases/invalid/rss-square-restreint.xml",
+    "series": "examples/atelier/series/quatre-formats/feed.json",
+    "channel_id": "chn_15c41e3d-52aa-4501-9baf-3083075f0edd",
+    "expected": "CF_RSS_POLICY"
+  },
+  {
+    "file": "cases/invalid/rss-square-image-absente.xml",
+    "series": "examples/atelier/series/quatre-formats/feed.json",
+    "channel_id": "chn_15c41e3d-52aa-4501-9baf-3083075f0edd",
+    "expected": "CF_RSS_POLICY"
+  },
+  {
+    "file": "cases/invalid/rss-pages-image-de-lecture.xml",
+    "series": "examples/atelier/series/quatre-formats/feed.json",
+    "channel_id": "chn_f0146a8f-d4d4-430e-a014-ab3677185e88",
+    "expected": "CF_RSS_POLICY"
+  }
+]

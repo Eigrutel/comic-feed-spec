@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comic-feed.example/schemas/publisher-1.1.schema.json",
+  "title": "Comic Feed 1.1 publisher",
+  "$comment": "Schéma structurel informatif. Compléter avec les règles sémantiques, interdocuments et réseau de SPECIFICATION.md.",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "const": "comic-feed"
+    },
+    "version": {
+      "const": "1.1"
+    },
+    "publisher": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^pub_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "images": {
+          "type": "object",
+          "properties": {
+            "avatar": {
+              "type": "string",
+              "minLength": 1
+            },
+            "banner": {
+              "type": "string",
+              "minLength": 1
+            },
+            "extensions": {
+              "type": "object",
+              "propertyNames": {
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "required": [],
+          "additionalProperties": true
+        },
+        "status": {
+          "enum": [
+            "active",
+            "inactive",
+            "moved"
+          ]
+        },
+        "moved_to": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "moved"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "moved_to"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "moved_to"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^ser_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "title": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "feed": {
+            "type": "string",
+            "minLength": 1
+          },
+          "updated_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+          },
+          "thumbnail": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "active",
+              "withdrawn"
+            ]
+          },
+          "extensions": {
+            "type": "object",
+            "propertyNames": {
+              "minLength": 1
+            },
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "feed",
+          "updated_at"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "generated_by": {
+      "$ref": "#/$defs/generated"
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "protocol",
+    "version",
+    "publisher",
+    "updated_at",
+    "series"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "generated": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

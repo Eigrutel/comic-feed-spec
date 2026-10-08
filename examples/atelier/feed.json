@@ -1,0 +1,23 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "publisher": {
+    "id": "pub_1c79845b-0e4c-49a9-8dee-bc1355766f28",
+    "name": "Atelier de démonstration 1.1 — fictif"
+  },
+  "updated_at": "2026-10-08T12:00:00Z",
+  "series": [
+    {
+      "id": "ser_d8ce4ffb-4a13-4d83-84b2-31c6570d6272",
+      "title": "Quatre formats — démonstration",
+      "feed": "series/quatre-formats/feed.json",
+      "updated_at": "2026-10-08T12:00:00Z"
+    },
+    {
+      "id": "ser_422fb088-99bf-4b6a-91f5-a4a44374a122",
+      "title": "Sens de lecture — démonstration",
+      "feed": "series/droite-gauche/feed.json",
+      "updated_at": "2026-10-08T12:00:00Z"
+    }
+  ]
+}

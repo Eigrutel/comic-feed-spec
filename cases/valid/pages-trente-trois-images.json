@@ -1,0 +1,310 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.1",
+  "series": {
+    "id": "ser_d8ce4ffb-4a13-4d83-84b2-31c6570d6272",
+    "title": "Quatre formats — démonstration",
+    "description": "Exemple technique fictif. Noms, titres et dates de démonstration ; médias non déployés.",
+    "language": "fr"
+  },
+  "publisher": {
+    "id": "pub_1c79845b-0e4c-49a9-8dee-bc1355766f28",
+    "feed": "../../feed.json"
+  },
+  "updated_at": "2026-10-08T12:00:00Z",
+  "channels": [
+    {
+      "id": "chn_844839a7-123e-4162-9ef5-c6786669a69e",
+      "type": "strip",
+      "title": "Strips de démonstration",
+      "updated_at": "2026-10-08T12:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_9317413e-695f-4ea6-b628-36192e281b2e",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/strip-01.jpg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chn_15c41e3d-52aa-4501-9baf-3083075f0edd",
+      "type": "square",
+      "title": "Gags de démonstration",
+      "updated_at": "2026-10-08T12:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_65b343a0-9b2b-4549-9998-b56f3273ecdc",
+          "status": "published",
+          "publish_at": "2026-10-02T08:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/gag-complet.jpg"
+            }
+          ],
+          "thumbnail": "thumbs/gag.jpg",
+          "url": "lecture/gag-01.html"
+        },
+        {
+          "id": "itm_b74f7d1c-ce61-4564-bfa5-a662a0069095",
+          "status": "scheduled",
+          "publish_at": "2026-10-10T08:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/gag-futur.jpg"
+            }
+          ],
+          "url": "lecture/gag-futur.html"
+        },
+        {
+          "id": "itm_48f1cb9a-2c08-45d7-9ec7-627d3d015534",
+          "status": "published",
+          "publish_at": "2026-10-03T08:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "access": {
+            "mode": "restricted"
+          },
+          "title": "Annonce réservée"
+        },
+        {
+          "id": "itm_f952b568-5936-4c20-8b77-7e780adae042",
+          "status": "withdrawn",
+          "updated_at": "2026-10-08T12:00:00Z"
+        }
+      ],
+      "url": "lecture/gags.html",
+      "rss": "rss/square.xml"
+    },
+    {
+      "id": "chn_69fd6933-917b-495b-b945-8c98efe27b49",
+      "type": "webtoon",
+      "title": "Épisodes de démonstration",
+      "updated_at": "2026-10-08T12:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_8414738a-44aa-4b9f-86fe-9e27065b89e8",
+          "status": "published",
+          "publish_at": "2026-10-01T09:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/longue-image.jpg"
+            }
+          ],
+          "title": "Une seule image verticale"
+        },
+        {
+          "id": "itm_a820ca44-4f6e-4962-97e6-34026fc84df6",
+          "status": "published",
+          "publish_at": "2026-10-04T09:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/segment-z.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/segment-a.webp"
+            }
+          ],
+          "title": "Deux images ordonnées"
+        }
+      ]
+    },
+    {
+      "id": "chn_f0146a8f-d4d4-430e-a014-ab3677185e88",
+      "type": "pages",
+      "title": "Chapitres de démonstration",
+      "updated_at": "2026-10-08T12:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_6b8cdbe1-6a6c-477d-86bf-99199f8d5a7e",
+          "status": "published",
+          "publish_at": "2026-10-03T10:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/page-0.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-1.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-2.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-3.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-4.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-5.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-6.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-7.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-8.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-9.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-10.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-11.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-12.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-13.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-14.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-15.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-16.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-17.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-18.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-19.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-20.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-21.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-22.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-23.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-24.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-25.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-26.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-27.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-28.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-29.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-30.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-31.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/page-32.jpg"
+            }
+          ],
+          "title": "Chapitre de démonstration 1",
+          "thumbnail": "thumbs/chapitre-01.jpg",
+          "url": "lecture/chapitre-01.html"
+        },
+        {
+          "id": "itm_70e33593-7b86-4546-b82a-02bf96d5f077",
+          "status": "published",
+          "publish_at": "2026-10-06T10:00:00Z",
+          "updated_at": "2026-10-08T12:00:00Z",
+          "resources": [
+            {
+              "type": "image",
+              "src": "media/chapitre-02/page-z.jpg"
+            },
+            {
+              "type": "image",
+              "src": "media/chapitre-02/page-a.jpg"
+            }
+          ],
+          "url": "lecture/chapitre-02.html"
+        }
+      ],
+      "reading_direction": "ltr",
+      "url": "lecture/chapitres.html",
+      "rss": "rss/pages.xml"
+    }
+  ]
+}
