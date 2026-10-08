@@ -1,0 +1,32 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "series": {
+    "id": "ser_5fa6ae75-ac86-42f5-ba1a-c14d25b2802d",
+    "title": "Ancien carnet",
+    "description": "Série fictive destinée à vérifier les échanges Comic Feed.",
+    "language": "fr",
+    "images": {
+      "cover": "images/cover.png",
+      "banner": "images/banner.webp"
+    },
+    "credits": [
+      {
+        "name": "Alex Exemple",
+        "role": "Dessin",
+        "id": "credit-local-1"
+      },
+      {
+        "name": "Camille Démo",
+        "role": "Scénario"
+      }
+    ],
+    "status": "withdrawn"
+  },
+  "publisher": {
+    "id": "pub_d628cd5f-9064-4958-be04-9977f72d4181",
+    "feed": "../../feed.json"
+  },
+  "updated_at": "2026-09-30T08:00:00Z",
+  "channels": []
+}

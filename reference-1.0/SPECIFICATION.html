@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Comic Feed 1.0 Spécification</title>
+<style>
+:root{color-scheme:light;--ink:#24343a;--muted:#627477;--paper:#fff;--line:#dbe3e1;--accent:#235969;--bg:#f3f5f1}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:16px;line-height:1.65;overflow-wrap:anywhere}
+.layout{max-width:1320px;margin:auto;display:grid;grid-template-columns:270px minmax(0,1fr);gap:36px;padding:36px 24px}aside{position:sticky;top:24px;height:calc(100vh - 48px);overflow:auto;padding-right:10px}aside strong{display:block;font-size:19px;margin:0 0 12px}nav a{display:block;padding:7px 0;font-size:13px;line-height:1.4;text-decoration:none;color:var(--accent)}nav a:hover{text-decoration:underline}
+main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:34px 44px}h1{font-size:42px;line-height:1.12;margin:0 0 28px;letter-spacing:-1px;color:#183d48}h2{font-size:25px;line-height:1.3;margin-top:46px;scroll-margin-top:26px}h3{font-size:19px;line-height:1.4;margin-top:30px}p,ul,ol{margin:16px 0}li{margin:7px 0}a{color:var(--accent)}code{font-family:ui-monospace,Consolas,monospace;font-size:.89em;overflow-wrap:anywhere;background:#f2f5f4;padding:1px 3px;border-radius:3px}.table-scroll{overflow-x:auto;margin:22px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.55}th{background:#edf2f1;text-align:left;font-weight:650}th,td{border:1px solid var(--line);padding:11px 12px;vertical-align:top;overflow-wrap:anywhere}td:first-child{font-weight:550}tr:nth-child(even) td{background:#fbfcfb}.edition{font-size:12px;color:var(--muted);margin-top:22px}.source-link{display:block;margin:18px 0;font-size:13px}
+@media(max-width:850px){.layout{display:block;padding:18px 12px}aside{position:static;height:auto;padding:0 8px 18px}nav{columns:2;column-gap:18px}nav a{break-inside:avoid}main{padding:26px 20px}h1{font-size:34px}h2{font-size:22px}}
+@media(max-width:480px){nav{columns:1}body{font-size:15px}main{padding:22px 14px}th,td{padding:8px;font-size:12px}}
+@media print{body{background:white;font-size:10pt}.layout{display:block;padding:0}aside{display:none}main{border:0;padding:0}h1{font-size:27pt}h2{font-size:16pt;break-after:avoid}h3{break-after:avoid}.table-scroll{overflow:visible}thead{display:table-header-group}tr{break-inside:avoid}a{color:inherit}code{background:none}table{font-size:8.5pt}}
+</style></head><body><div class="layout"><aside><strong>Comic Feed 1.0</strong><nav aria-label="Sommaire"><a href="#section-2">1 Portée et conformité</a><a href="#section-3">2 Modèle de données et identité</a><a href="#section-4">3 Représentation commune</a><a href="#section-5">4 Feed Publisher</a><a href="#section-6">5 Feed Série</a><a href="#section-7">6 Canal</a><a href="#section-8">7 Publication et ressources</a><a href="#section-9">8 Accès et classification</a><a href="#section-10">9 Cycle de vie et dates</a><a href="#section-11">10 Relations et déplacements</a><a href="#section-12">11 Transport Web</a><a href="#section-13">12 Versions et extensions</a><a href="#section-14">13 Validation et sécurité</a><a href="#section-15">14 Sortie RSS</a><a href="#section-16">Annexe A Catalogue des exemples</a><a href="#section-17">Annexe B Exemples invalides</a><a href="#section-18">Annexe C Arborescence et utilisation</a><a href="#section-19">Annexe D Références et provenance</a></nav><a class="source-link" href="SPECIFICATION.md">Source Markdown</a><p class="edition">Édition du 5 octobre 2026<br>Document autonome sans service externe</p></aside><main><h1 id="section-1">Comic Feed 1.0</h1>
+<p>Spécification technique du protocole et de sa sortie RSS</p>
+<p>Version du protocole : <strong>1.0</strong>. Édition : <strong>5 octobre 2026</strong>. Langue normative de cette édition : français.</p>
+<p>Ce document définit les données nécessaires pour publier et consommer un catalogue Comic Feed sans utiliser les applications Eigrutel. Il applique le cahier des charges de référence du 24 septembre 2026 et les précisions P1 à P7 validées le 5 octobre 2026. Il constitue le livrable technique de l’étape 1 ; il ne certifie pas encore les applications ni le parcours de conformité final multi-Publishers.</p>
+<p>Le contenu est autonome : les règles utiles à l’implémentation figurent ici. Les exemples et schémas joints sont des aides, jamais une dépendance à un serveur. Aucune autorisation d’Eigrutel n’est requise pour implémenter le protocole. Cette spécification ne confère aucun droit de réutilisation sur les œuvres référencées par les Feed.</p>
+<h2 id="section-2">1 Portée et conformité</h2>
+<p><strong>DOIT</strong>, <strong>NE DOIT PAS</strong>, <strong>OBLIGATOIRE</strong> désignent une exigence. <strong>DEVRAIT</strong> désigne une recommandation dont une exception doit être justifiable. <strong>PEUT</strong> et <strong>FACULTATIF</strong> désignent une possibilité. Les tableaux de champs des sections 3 à 8 sont normatifs, même sans majuscules.</p>
+<p>Un producteur émet les fichiers Feed. Un consommateur les interprète ; il peut être un Reader, un Collector, un outil d’import ou un validateur. Le protocole décrit les contenus et leurs relations, sans imposer l’interface du consommateur. Les réglages de Reader, projets privés d’Admin et sauvegardes personnelles de Collector ne sont pas des Feed.</p>
+<p>Les sections 1 à 14 sont normatives. Les annexes sont informatives. En cas d’écart entre un schéma, un exemple et ces sections, les sections normatives prévalent et l’écart doit être corrigé. Les codes de diagnostic de la section 13 sont des identifiants documentaires stables de cette édition, pas des champs à ajouter aux Feed.</p>
+<p>On distingue : la conformité des données, l’accessibilité de leur hébergement et la capacité d’un consommateur à lire un type. Un JSON conforme peut être inaccessible depuis un navigateur distant faute de CORS ; un lecteur peut ignorer un type futur sans rejeter les autres Canaux. Le validateur ne certifie ni identité réelle, ni légalité, ni moralité, ni droits sur les œuvres.</p>
+<h2 id="section-3">2 Modèle de données et identité</h2>
+<p>Un <strong>Publisher</strong> est la racine technique d’un catalogue. Une <strong>Série</strong> rassemble les métadonnées communes à une œuvre. Un <strong>Canal</strong> constitue une forme de diffusion de cette Série. Une <strong>Publication</strong> constitue une unité de lecture dans ce Canal. La hiérarchie est Publisher → Série → Canal → Publication.</p>
+<p>Le Feed Publisher est un index léger. Chaque Série possède un Feed distinct contenant ses Canaux et Publications. Une Série PEUT comporter plusieurs Canaux de même type. Une Publication appartient à un seul Canal ; les références aux mêmes objets dans un index ou dans des versions successives ne sont pas de nouvelles entités.</p>
+<p>Les IDs identifient, les noms décrivent et les URLs localisent. Un ID DOIT rester permanent lors d’un renommage, d’une correction, d’une sauvegarde, d’une restauration de sauvegarde ou d’un déplacement des fichiers. Une duplication créative DOIT recevoir de nouveaux IDs. Le type d’un Canal DOIT rester permanent. Déplacer une Publication déjà disponible vers un autre Canal impose de retirer l’ancienne et de créer une Publication d’un nouvel ID dans le Canal de destination.</p>
+<p>Une définition d’objet ne peut apparaître deux fois avec le même ID dans un même état de catalogue. Les index et références parent sont des références, pas des définitions concurrentes. Un itm_ ne peut être défini dans deux Canaux ou deux Séries. Les variantes d’exemples du dossier scenarios représentent des états alternatifs, jamais un catalogue à fusionner.</p>
+<p>Le Feed Série est la source de vérité éditoriale pour la Série. L’index Publisher transporte son ID, son adresse et sa date de modification, ainsi que des métadonnées de repérage. Une différence de nom n’autorise pas une fusion ou une substitution d’ID.</p>
+<p>Suivre un Publisher ou une Série n’autorise pas l’abonnement automatique aux nouveaux Canaux. Les choix de suivi et de lecture appartiennent au lecteur et ne sont pas des champs du Feed. Le consommateur peut mémoriser localement ces choix et ses informations de lecture sans compte central.</p>
+<h2 id="section-4">3 Représentation commune</h2>
+<h3>3.1 Sérialisation</h3>
+<p>Un Feed DOIT être un objet JSON conforme à RFC 8259, encodé en UTF-8 sans BOM. Les commentaires, virgules finales, NaN et Infinity ne sont pas du JSON autorisé. Les noms de membres dupliqués sont refusés à tous les niveaux, avant toute règle choisissant arbitrairement une des valeurs. Les chaînes DOIVENT représenter des caractères Unicode valides, sans surrogate isolé.</p>
+<p>Dans un Feed Publisher, series est un tableau. Dans un Feed Série, series est un objet et channels est un tableau. Aucun champ feed_type n’est nécessaire. Un document ne DOIT PAS combiner les deux structures.</p>
+<p>O signifie obligatoire. F signifie facultatif. C signifie obligatoire sous la condition indiquée. Un champ F, s’il est présent, doit respecter son type et ses contraintes.</p>
+<p>Les chemins utilisent la notation pointée ; [] désigne chaque élément d’un tableau. Les noms de champs et valeurs fermées sont sensibles à la casse. PUBLIC, RESTRICTED et MIXED sont les libellés de documentation ; les valeurs JSON sont public, restricted et mixed.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Type utilisé</th>
+<th>Définition normative</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Objet</td>
+<td>Objet JSON ; ni tableau ni null.</td>
+</tr>
+<tr>
+<td>Tableau de X</td>
+<td>Tableau JSON composé uniquement d’éléments du type indiqué.</td>
+</tr>
+<tr>
+<td>Texte</td>
+<td>Chaîne Unicode rendue comme texte, jamais comme HTML actif. Une chaîne obligatoire identifiant un nom ou un titre doit contenir au moins un caractère non blanc.</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>Date RFC 3339 de forme AAAA-MM-JJTHH:mm:ss[.fraction]Z ou avec décalage ±HH:mm. T et Z majuscules ; secondes 00 à 59 ; date civile valide ; fuseau explicite ; -00:00 exclu car décalage inconnu. Les comparaisons portent sur l’instant, pas sur la chaîne.</td>
+</tr>
+<tr>
+<td>Langue</td>
+<td>Étiquette BCP 47, par exemple fr ou en-GB. Absence : langue non déclarée, sans déduction obligatoire.</td>
+</tr>
+<tr>
+<td>ID Publisher</td>
+<td>pub_ suivi d’un UUID v4 canonique en minuscules.</td>
+</tr>
+<tr>
+<td>ID Série</td>
+<td>ser_ suivi d’un UUID v4 canonique en minuscules.</td>
+</tr>
+<tr>
+<td>ID Canal</td>
+<td>chn_ suivi d’un UUID v4 canonique en minuscules.</td>
+</tr>
+<tr>
+<td>ID Publication</td>
+<td>itm_ suivi d’un UUID v4 canonique en minuscules.</td>
+</tr>
+<tr>
+<td>Référence URL</td>
+<td>Chaîne non vide contenant une URL absolue ou une référence relative Web, résolue par rapport au document Feed qui la contient. Ce n’est ni un chemin système ni un identifiant.</td>
+</tr>
+<tr>
+<td>Référence image</td>
+<td>Référence URL dont la ressource est effectivement une image JPEG, PNG ou WebP. L’extension seule ne prouve pas le format.</td>
+</tr>
+</tbody></table></div>
+<p>Les champs connus n’acceptent pas null. Une donnée facultative inconnue est omise. Les tableaux explicitement autorisés à être vides utilisent []. Les chaînes facultatives peuvent être vides sauf contrainte particulière, mais un producteur DEVRAIT omettre une donnée sans valeur utile. Les clés dupliquées dans un même objet sont refusées ; aucune réparation silencieuse n’est autorisée.</p>
+<p>Un ID ne dépend jamais du titre, du nom de fichier, de l’URL, de l’ordre du catalogue ou de l’heure de publication. Il reste opaque pour le consommateur. Les préfixes sont vérifiés selon le type d’objet. Les ID ne prouvent pas l’identité réelle d’un Publisher.</p>
+<h3>3.2 Identifiants et dates</h3>
+<p>Après le préfixe pub_, ser_, chn_ ou itm_, l’UUID DOIT suivre ce motif, ancré sur toute la chaîne : <code>[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}</code>. Les producteurs utilisent un générateur aléatoire UUID v4 approprié, sans registre central. L’égalité des IDs est une égalité exacte de chaînes ; le consommateur ne normalise pas silencieusement un ID non conforme.</p>
+<p>Le profil des dates est strictement celui de la table : année 0001 à 9999, calendrier grégorien valide, heure 00 à 23, minutes et secondes 00 à 59, fractions décimales facultatives, décalage horaire numérique de 00:00 à 23:59 ou Z. Les secondes intercalaires et le décalage inconnu -00:00 ne sont pas admis dans ce profil. Toutes les comparaisons DOIVENT convertir en instants UTC, y compris lorsque les fractions ou décalages diffèrent. L’affichage local est libre.</p>
+<p>Les codes de langue respectent BCP 47. Ils ne pilotent pas l’accès. L’absence d’une langue ne rend pas le Feed invalide ; une éventuelle préférence d’affichage ne modifie pas les données.</p>
+<h3>3.3 Ordre</h3>
+<p>L’ordre des membres d’un objet JSON n’a aucune signification. L’ordre des ressources d’une Publication webtoon est normatif. L’ordre des autres tableaux ne définit ni identité, ni nouveauté, ni accès. Un Reader choisit sa présentation ; pour une chronologie, il utilise publish_at et non l’ordre des fichiers ou updated_at. Il PEUT utiliser l’ID comme départage stable d’horodatages égaux.</p>
+<h2 id="section-5">4 Feed Publisher</h2>
+<h3>4.1 Enveloppe</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>protocol</td>
+<td>Texte</td>
+<td>O</td>
+<td>Valeur exacte comic-feed.</td>
+</tr>
+<tr>
+<td>version</td>
+<td>Texte</td>
+<td>O</td>
+<td>Valeur exacte 1.0 pour un producteur V1.0 ; jamais un nombre JSON.</td>
+</tr>
+<tr>
+<td>publisher</td>
+<td>Objet Publisher</td>
+<td>O</td>
+<td>Identité du propriétaire technique du catalogue.</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Date</td>
+<td>O</td>
+<td>Dernière modification sémantique de ce Feed ; ce n’est pas l’heure de téléchargement.</td>
+</tr>
+<tr>
+<td>series</td>
+<td>Tableau d’entrées de Série</td>
+<td>O</td>
+<td>Index léger ; [] autorisé. Aucune liste de Publications à ce niveau.</td>
+</tr>
+<tr>
+<td>generated_by</td>
+<td>Objet logiciel</td>
+<td>F</td>
+<td>Diagnostic uniquement.</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Objet d’extensions</td>
+<td>F</td>
+<td>Voir section 12.</td>
+</tr>
+</tbody></table></div>
+<h3>4.2 Objet Publisher</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à publisher</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>ID Publisher</td>
+<td>O</td>
+<td>Permanent.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Texte</td>
+<td>O</td>
+<td>Nom public libre et modifiable.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Texte</td>
+<td>F</td>
+<td>Libre, purement informatif ; ne pilote aucun comportement.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Texte</td>
+<td>F</td>
+<td>Présentation du Publisher.</td>
+</tr>
+<tr>
+<td>language</td>
+<td>Langue</td>
+<td>F</td>
+<td>Langue principale des informations Publisher.</td>
+</tr>
+<tr>
+<td>url</td>
+<td>Référence URL</td>
+<td>F</td>
+<td>Page publique du Publisher ; ne remplace pas une adresse de Feed.</td>
+</tr>
+<tr>
+<td>images</td>
+<td>Objet</td>
+<td>F</td>
+<td>Contient les références d’images ci-dessous.</td>
+</tr>
+<tr>
+<td>images.avatar</td>
+<td>Référence image</td>
+<td>F</td>
+<td>Avatar.</td>
+</tr>
+<tr>
+<td>images.banner</td>
+<td>Référence image</td>
+<td>F</td>
+<td>Bandeau ; aucune dimension ni mise en page imposée au Reader.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Texte fermé</td>
+<td>F</td>
+<td>active, inactive ou moved ; active par défaut.</td>
+</tr>
+<tr>
+<td>moved_to</td>
+<td>Référence URL</td>
+<td>C</td>
+<td>Obligatoire et autorisé seulement pour status = moved ; cible un Feed Publisher.</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Objet d’extensions</td>
+<td>F</td>
+<td>Voir section 12.</td>
+</tr>
+</tbody></table></div>
+<p>Un ancien Feed moved conserve protocol, version, publisher.id, publisher.name, updated_at et series, avec un tableau series éventuellement vide. Il est interprété comme un avis de déplacement ; un tableau vide dans cet avis ne signifie pas le retrait de l’ancien catalogue.</p>
+<h3>4.3 Entrée de Série dans series</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à series[]</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>ID Série</td>
+<td>O</td>
+<td>Identique à series.id du Feed Série ciblé.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>Texte</td>
+<td>O</td>
+<td>Titre de repérage dans l’index ; le Feed Série reste la source de vérité éditoriale.</td>
+</tr>
+<tr>
+<td>feed</td>
+<td>Référence URL</td>
+<td>O</td>
+<td>Adresse du Feed Série, jamais sa page de lecture.</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Date</td>
+<td>O</td>
+<td>Copie exacte du updated_at racine de la version du Feed Série indexée.</td>
+</tr>
+<tr>
+<td>thumbnail</td>
+<td>Référence image</td>
+<td>F</td>
+<td>Miniature dupliquée volontairement pour l’index.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Texte fermé</td>
+<td>F</td>
+<td>active ou withdrawn ; active par défaut. Copie de l’état de la Série.</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Objet d’extensions</td>
+<td>F</td>
+<td>Voir section 12.</td>
+</tr>
+</tbody></table></div>
+<p>Ces champs obligatoires sont conservés pour une entrée withdrawn. Chaque id apparaît une seule fois dans l’index. Une indisponibilité du Feed ciblé n’autorise jamais à transformer une Série en withdrawn.</p>
+<p>Le statut inactive n’est ni un retrait, ni une instruction de désabonnement : le catalogue existant reste interprétable et lisible selon ses accès. Un consommateur NE DOIT PAS supprimer les favoris ou positions à cause de cette seule valeur.</p>
+<h2 id="section-6">5 Feed Série</h2>
+<h3>5.1 Enveloppe</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>protocol</td>
+<td>Texte</td>
+<td>O</td>
+<td>Valeur exacte comic-feed.</td>
+</tr>
+<tr>
+<td>version</td>
+<td>Texte</td>
+<td>O</td>
+<td>Chaîne 1.0 pour un producteur V1.0.</td>
+</tr>
+<tr>
+<td>series</td>
+<td>Objet Série</td>
+<td>O</td>
+<td>Objet, et non tableau : un Feed Série décrit une seule Série.</td>
+</tr>
+<tr>
+<td>publisher</td>
+<td>Objet référence parent</td>
+<td>O</td>
+<td>Contient id et feed obligatoires.</td>
+</tr>
+<tr>
+<td>publisher.id</td>
+<td>ID Publisher</td>
+<td>O</td>
+<td>Doit correspondre au publisher.id du Feed parent.</td>
+</tr>
+<tr>
+<td>publisher.feed</td>
+<td>Référence URL</td>
+<td>O</td>
+<td>Adresse du Feed Publisher parent.</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Date</td>
+<td>O</td>
+<td>Dernière modification sémantique de l’ensemble du Feed Série.</td>
+</tr>
+<tr>
+<td>channels</td>
+<td>Tableau de Canaux</td>
+<td>O</td>
+<td>[] autorisé. Un même type peut apparaître dans plusieurs Canaux d’IDs distincts.</td>
+</tr>
+<tr>
+<td>generated_by</td>
+<td>Objet logiciel</td>
+<td>F</td>
+<td>Même objet de diagnostic que dans le Feed Publisher.</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Objet d’extensions</td>
+<td>F</td>
+<td>Voir section 12.</td>
+</tr>
+</tbody></table></div>
+<p>Les informations du Publisher ne sont pas recopiées dans cette référence parent. Il n’est pas nécessaire de répéter publisher.id et series.id dans les Canaux et Publications imbriqués : leur appartenance provient de la structure du document.</p>
+<h3>5.2 Objet Série</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à series</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>ID Série</td>
+<td>O</td>
+<td>Permanent.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>Texte</td>
+<td>O</td>
+<td>Titre public libre et modifiable.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Texte</td>
+<td>F</td>
+<td>Présentation de l’œuvre.</td>
+</tr>
+<tr>
+<td>language</td>
+<td>Langue</td>
+<td>F</td>
+<td>Langue principale déclarée pour la Série.</td>
+</tr>
+<tr>
+<td>images</td>
+<td>Objet</td>
+<td>F</td>
+<td>Contient les références ci-dessous.</td>
+</tr>
+<tr>
+<td>images.cover</td>
+<td>Référence image</td>
+<td>F</td>
+<td>Couverture.</td>
+</tr>
+<tr>
+<td>images.banner</td>
+<td>Référence image</td>
+<td>F</td>
+<td>Bandeau.</td>
+</tr>
+<tr>
+<td>credits</td>
+<td>Tableau de crédits</td>
+<td>F</td>
+<td>[] autorisé ; les créateurs sont distincts du Publisher technique.</td>
+</tr>
+<tr>
+<td>content_rating</td>
+<td>Texte</td>
+<td>F</td>
+<td>Classification libre de la Série.</td>
+</tr>
+<tr>
+<td>content_warning</td>
+<td>Texte</td>
+<td>F</td>
+<td>Avertissement éditorial libre de la Série.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Texte fermé</td>
+<td>F</td>
+<td>active ou withdrawn ; active par défaut.</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Objet d’extensions</td>
+<td>F</td>
+<td>Voir section 12.</td>
+</tr>
+</tbody></table></div>
+<p>Il n’existe pas de series.updated_at imbriqué : le updated_at racine du Feed Série remplit cette fonction. Une Série withdrawn cesse de proposer ses Publications à la lecture, même si leurs anciennes descriptions sont conservées dans le document.</p>
+<h3>5.3 Crédit</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à credits[]</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>Texte</td>
+<td>O</td>
+<td>Nom affiché du créateur.</td>
+</tr>
+<tr>
+<td>role</td>
+<td>Texte</td>
+<td>F</td>
+<td>Rôle libre : aucune liste fermée ni compte requis.</td>
+</tr>
+<tr>
+<td>id</td>
+<td>Texte non vide</td>
+<td>F</td>
+<td>Identifiant opaque facultatif dans le contexte du Publisher ; ni préfixe imposé ni identité mondiale déduite.</td>
+</tr>
+<tr>
+<td>url</td>
+<td>Référence URL</td>
+<td>F</td>
+<td>Page associée à ce crédit.</td>
+</tr>
+</tbody></table></div>
+<h2 id="section-7">6 Canal</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à channels[]</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>ID Canal</td>
+<td>O</td>
+<td>Permanent. Un Canal appartient à une seule Série.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Texte fermé</td>
+<td>O</td>
+<td>strip ou webtoon en V1 ; permanent pour cet ID.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>Texte</td>
+<td>O</td>
+<td>Nom public libre du Canal ; ne détermine pas son type.</td>
+</tr>
+<tr>
+<td>language</td>
+<td>Langue</td>
+<td>F</td>
+<td>Langue du Canal, recommandée par le cahier.</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Date</td>
+<td>O</td>
+<td>Change lorsque le Canal ou une de ses Publications change.</td>
+</tr>
+<tr>
+<td>access</td>
+<td>Objet accès</td>
+<td>O</td>
+<td>Contient mode obligatoire.</td>
+</tr>
+<tr>
+<td>access.mode</td>
+<td>Texte fermé</td>
+<td>O</td>
+<td>public, restricted ou mixed. Voir section 8.</td>
+</tr>
+<tr>
+<td>publications</td>
+<td>Tableau de Publications</td>
+<td>O</td>
+<td>[] autorisé.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Texte fermé</td>
+<td>F</td>
+<td>active ou withdrawn ; active par défaut.</td>
+</tr>
+<tr>
+<td>url</td>
+<td>Référence URL</td>
+<td>C</td>
+<td>Facultative en général ; obligatoire si rss est présent. Page publique de lecture du Canal.</td>
+</tr>
+<tr>
+<td>rss</td>
+<td>Référence URL</td>
+<td>F</td>
+<td>Adresse du RSS de ce Canal ; autorisée seulement si access.mode = public.</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Objet d’extensions</td>
+<td>F</td>
+<td>Voir section 12.</td>
+</tr>
+</tbody></table></div>
+<p>Un Canal withdrawn conserve ses champs obligatoires, y compris type et access, mais ses Publications ne sont plus proposées à la lecture. Il peut avoir publications: [].</p>
+<p>Le Canal est l’unité de suivi des Publications. Un type inconnu est traité selon la section 12, sans interpréter son nom comme du code, un module ou une URL de moteur.</p>
+<h2 id="section-8">7 Publication et ressources</h2>
+<h3>7.1 Champs de Publication</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à publications[]</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>ID Publication</td>
+<td>O</td>
+<td>Permanent ; une seule appartenance à un Canal.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Texte fermé</td>
+<td>O</td>
+<td>scheduled, published ou withdrawn. draft interdit dans les Feed diffusés.</td>
+</tr>
+<tr>
+<td>publish_at</td>
+<td>Date</td>
+<td>C</td>
+<td>Obligatoire pour scheduled et published ; facultatif pour withdrawn. Date normative de disponibilité.</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Date</td>
+<td>O</td>
+<td>Dernière modification ; ne crée pas une nouveauté.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>Texte</td>
+<td>F</td>
+<td>Titre éditorial ; son affichage reste libre.</td>
+</tr>
+<tr>
+<td>thumbnail</td>
+<td>Référence image</td>
+<td>F</td>
+<td>Miniature ; ne remplace jamais une ressource de lecture manquante.</td>
+</tr>
+<tr>
+<td>resources</td>
+<td>Tableau de ressources</td>
+<td>C</td>
+<td>Obligatoire pour un contenu non retiré d’accès effectif public ; facultatif si restricted ou withdrawn. Voir 7.2.</td>
+</tr>
+<tr>
+<td>access</td>
+<td>Objet accès</td>
+<td>C</td>
+<td>Facultatif avec héritage d’un Canal public/restricted ; obligatoire pour un contenu non retiré sous Canal mixed.</td>
+</tr>
+<tr>
+<td>access.mode</td>
+<td>Texte fermé</td>
+<td>C</td>
+<td>Obligatoire si access existe ; public ou restricted exclusivement.</td>
+</tr>
+<tr>
+<td>update_notice</td>
+<td>Objet avis de correction</td>
+<td>F</td>
+<td>Signale une correction avec le même ID.</td>
+</tr>
+<tr>
+<td>update_notice.at</td>
+<td>Date</td>
+<td>C</td>
+<td>Obligatoire si update_notice existe ; instant du signalement, au plus tard updated_at.</td>
+</tr>
+<tr>
+<td>update_notice.message</td>
+<td>Texte non vide</td>
+<td>C</td>
+<td>Obligatoire si update_notice existe ; explication libre et courte.</td>
+</tr>
+<tr>
+<td>content_rating</td>
+<td>Texte</td>
+<td>F</td>
+<td>Classification libre de cette Publication.</td>
+</tr>
+<tr>
+<td>content_warning</td>
+<td>Texte</td>
+<td>F</td>
+<td>Avertissement éditorial libre de cette Publication.</td>
+</tr>
+<tr>
+<td>url</td>
+<td>Référence URL</td>
+<td>C</td>
+<td>Facultative en général ; obligatoire pour une Publication incluse dans la sortie RSS. Page donnant accès à cette Publication.</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Objet d’extensions</td>
+<td>F</td>
+<td>Voir section 12.</td>
+</tr>
+</tbody></table></div>
+<p>Une Publication withdrawn peut se limiter à id, status et updated_at. Les autres champs, s’ils sont conservés, respectent leurs types, mais les ressources ne sont pas utilisées pour proposer sa lecture.</p>
+<p>La date de disponibilité reste obligatoire dans les données même si un Reader choisit de ne pas l’afficher. Après première disponibilité, une correction conserve publish_at et id, et modifie updated_at. Il n’existe pas d’état corrected : une correction est une modification de la même Publication.</p>
+<h3>7.2 Ressource de lecture</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à resources[]</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>Texte fermé</td>
+<td>O</td>
+<td>image en V1.</td>
+</tr>
+<tr>
+<td>src</td>
+<td>Référence image</td>
+<td>O</td>
+<td>Référence externe au JSON ; jamais des octets encodés dans une chaîne.</td>
+</tr>
+</tbody></table></div>
+<p>Pour une Publication non retirée dont resources est fourni, strip exige exactement une ressource ; webtoon exige au moins une ressource. L’ordre du tableau est l’ordre de lecture des segments webtoon. Aucun découpage automatique n’est décrit par le Feed.</p>
+<p>Une Publication restricted peut omettre resources : le Feed ne révèle alors pas l’adresse des œuvres protégées. Pour éviter deux représentations du même cas, resources: [] est réservé aux retraits ; pour une annonce restreinte sans médias exposés, le champ est omis. Si des ressources restreintes sont annoncées, elles respectent les mêmes formats et cardinalités et la protection réelle reste à la charge de l’hébergement.</p>
+<p>JPG et JPEG désignent le même format. Les médias reconnus sont JPEG, PNG et WebP. GIF n’est pas pris en charge en V1 ; SVG, HTML, JavaScript, iframe et autres contenus actifs ne sont pas des ressources de lecture autorisées. Ces contraintes d’images valent aussi pour les miniatures et visuels déclarés par le Feed. Aucun champ de poids ou de dimensions n’est imposé par cette version.</p>
+<h3>7.3 Formats et chargement</h3>
+<p>Le type image désigne des octets d’image réellement décodables comme JPEG, PNG ou WebP. Le validateur NE DOIT PAS se contenter d’une extension de fichier ou d’un Content-Type pour accepter une ressource. Les paramètres de décodage et limites locales de mémoire restent du ressort de l’application ; aucune limite universelle de pixels ou d’octets n’est fixée.</p>
+<p>Une ressource manquante, interdite ou corrompue NE DOIT PAS être remplacée par une miniature présentée comme l’œuvre complète. Un lien facultatif vers une page HTML n’est pas une ressource de lecture image : cette page peut être ouverte séparément, mais le Feed ne la fait pas exécuter dans le moteur de lecture.</p>
+<h2 id="section-9">8 Accès et classification</h2>
+<h3>8.1 Accès effectif</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Valeur du Canal</th>
+<th>Valeur de la Publication</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public</td>
+<td>access absent</td>
+<td>public</td>
+</tr>
+<tr>
+<td>restricted</td>
+<td>access absent</td>
+<td>restricted</td>
+</tr>
+<tr>
+<td>public ou restricted</td>
+<td>public explicite</td>
+<td>public</td>
+</tr>
+<tr>
+<td>public ou restricted</td>
+<td>restricted explicite</td>
+<td>restricted</td>
+</tr>
+<tr>
+<td>mixed</td>
+<td>public explicite</td>
+<td>public</td>
+</tr>
+<tr>
+<td>mixed</td>
+<td>restricted explicite</td>
+<td>restricted</td>
+</tr>
+<tr>
+<td>mixed</td>
+<td>access absent sur une Publication non retirée</td>
+<td>Publication invalide ; jamais publique par défaut.</td>
+</tr>
+<tr>
+<td>Toute valeur</td>
+<td>mixed dans la Publication</td>
+<td>Publication invalide.</td>
+</tr>
+</tbody></table></div>
+<p>Un avis de retrait minimal n’a pas besoin d’annoncer un accès. Un mode inconnu sur un contenu actif ne devient ni public ni une règle implicite : l’objet concerné est isolé.</p>
+<p>PUBLIC signifie sans autorisation Comic Feed. Il ne vaut ni licence de réutilisation ni mise dans le domaine public. RESTRICTED décrit un besoin d’autorisation, sans définir une API d’authentification, un prestataire ou un paiement. Aucun code, mot de passe ou jeton n’est ajouté aux champs standards proposés.</p>
+<p>Le champ access.mode du Canal représente sa valeur par défaut, pas une garantie sur tous ses descendants. Une Série ou un Canal dont les contenus mêlent les deux accès peut être présenté comme mixte par le consommateur, indépendamment du choix de valeur par défaut. Une Série ne possède pas de champ standard access concurrent.</p>
+<p>Le consommateur calcule l’accès effectif avant de sélectionner une ressource, un export ou une Publication pour le RSS. Il n’émet pas une requête protégée pour découvrir si un mode inconnu voulait dire public. Une URL connue ne constitue pas une autorisation.</p>
+<h3>8.2 Classification</h3>
+<p>content_rating et content_warning sont des textes libres admis sur la Série et la Publication. Les déclarations de Série décrivent le contexte de l’œuvre ; celles d’une Publication apportent une information propre. Elles restent attachées à leur niveau et une valeur de Publication n’efface pas automatiquement celle de la Série. Aucun vocabulaire mondial, calcul d’âge, filtre ou correspondance avec PUBLIC/RESTRICTED n’est imposé.</p>
+<h3>8.3 Protection réelle</h3>
+<p>Un Feed public PEUT annoncer des métadonnées de contenu restreint sans ressources. Les fichiers protégés peuvent nécessiter une couche serveur choisie par le Publisher. La V1 ne définit ni paiement, ni API d’autorisation, ni transfert de secrets. Un mot de passe, jeton ou code d’accès ne DOIT PAS être placé dans un champ standard du Feed. Une éventuelle extension ne doit pas exposer un secret dans un document public.</p>
+<h2 id="section-10">9 Cycle de vie et dates</h2>
+<h3>9.1 Disponibilité</h3>
+<p>Pour une Publication connue, le consommateur applique dans cet ordre :</p>
+<ol>
+<li>Vérifier que la structure, les IDs, le type et les valeurs nécessaires sont compris.</li>
+<li>Écarter un Publisher moved jusqu’à traitement de sa migration. inactive n’interdit pas la lecture.</li>
+<li>Écarter une Série, un Canal ou une Publication withdrawn, même si des médias restent référencés.</li>
+<li>Pour scheduled ou published, attendre que l’instant courant soit supérieur ou égal à publish_at.</li>
+<li>Appliquer l’accès effectif. Une Publication RESTRICTED arrivée à échéance reste soumise à son autorisation.</li>
+</ol>
+<p>Un contenu scheduled arrivé à échéance est temporellement disponible sans réécriture du Feed. published avec une date future n’est pas disponible avant cette date. Un producteur DEVRAIT écrire scheduled avant l’échéance ; la règle temporelle reste identique pour les deux valeurs.</p>
+<p>Le temps est évalué localement par le consommateur. Le protocole ne fournit pas de service d’horloge. Une horloge incorrecte peut donc modifier cette évaluation. La programmation statique n’est pas un mécanisme de confidentialité : métadonnées et médias déjà déposés peuvent être accessibles directement.</p>
+<h3>9.2 Changements éditoriaux</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Brouillon</td>
+<td>Privé au projet de l’auteur ; jamais dans un Feed diffusé.</td>
+</tr>
+<tr>
+<td>Programmé, jamais disponible</td>
+<td>Modifiable et reprogrammable avec le même ID ; tout changement modifie updated_at.</td>
+</tr>
+<tr>
+<td>Programmé annoncé puis annulé</td>
+<td>S’il a été diffusé, un avis withdrawn permet aux consommateurs qui le connaissent d’éviter une activation future. Une simple absence ne constitue pas cet avis.</td>
+</tr>
+<tr>
+<td>Première disponibilité</td>
+<td>Pas de nouvel ID ; le seul passage du temps ne change pas updated_at.</td>
+</tr>
+<tr>
+<td>Correction après disponibilité</td>
+<td>Même ID et même publish_at ; updated_at augmente.</td>
+</tr>
+<tr>
+<td>Correction signalée</td>
+<td>Même règle, avec update_notice.at et message.</td>
+</tr>
+<tr>
+<td>Retrait</td>
+<td>status = withdrawn et updated_at augmente ; les ressources peuvent disparaître.</td>
+</tr>
+<tr>
+<td>Renommage ou changement d’adresse média</td>
+<td>Même ID ; updated_at augmente pour le changement sémantique.</td>
+</tr>
+</tbody></table></div>
+<p>Un retrait valide reçu prime sur la présence d’anciens médias. La V1 n’ajoute pas de procédure de restauration éditoriale d’un retrait : une réactivation contradictoire ne rétablit pas silencieusement la lecture et doit être signalée. Restaurer une sauvegarde privée ne justifie pas la réémission d’un ancien catalogue en tant que mise à jour récente.</p>
+<h3>9.3 Propagation de updated_at</h3>
+<p>Une modification sémantique d’un objet DOIT produire une valeur updated_at strictement plus récente que la précédente. Une mise en forme JSON différente ou un téléchargement ne suffit pas à créer une modification sémantique. Le producteur utilise une précision suffisante lorsque plusieurs modifications surviennent dans une seconde.</p>
+<p>La propagation d’une correction de Publication est : Publication → Canal → updated_at racine du Feed Série → series[].updated_at dans le Feed Publisher → updated_at racine du Feed Publisher. Un changement de métadonnées de Série commence au Feed Série. Les dates parent DOIVENT être au moins aussi récentes que celles de leurs descendants. publish_at est exclu de ce calcul : updated_at peut lui être antérieur.</p>
+<p>L’index DOIT recopier exactement la valeur updated_at du Feed Série indexé. Le consommateur peut alors ne recharger que les Séries dont cette valeur a changé. Un changement de l’adresse feed déclenche également une résolution de la nouvelle adresse. Des snapshots d’horodatage plus ancien ou contradictoires ne doivent pas écraser sans diagnostic les données plus récentes connues.</p>
+<p>Lorsqu’un média change sous la même URL, le producteur DOIT rendre sa nouvelle version récupérable par les mécanismes HTTP ordinaires. Il DEVRAIT changer l’URL du média si une revalidation fiable des caches n’est pas assurée ; cette opération ne change jamais l’ID de Publication. Les clients ne déduisent pas d’un seul updated_at qu’un cache d’image s’est nécessairement vidé.</p>
+<h3>9.4 Nouveautés et corrections</h3>
+<p>Une nouvelle œuvre est détectée par un nouvel ID de Publication dans une appartenance vérifiée. Une Publication déjà connue mais future entre dans les contenus disponibles à son échéance. Une correction, même signalée, ne devient pas une nouvelle œuvre et ne réinitialise pas automatiquement l’état de lecture personnel.</p>
+<p>update_notice.at désigne l’avis et DOIT être inférieur ou égal à updated_at. Son message est du texte. Le consommateur PEUT mémoriser id + update_notice.at pour ne montrer un avis qu’une fois. Une nouvelle correction signalée utilise une nouvelle date d’avis ; une correction silencieuse peut omettre l’objet. La V1 ne fournit pas un historique de toutes les corrections.</p>
+<h3>9.5 Conservation des retraits</h3>
+<p>Le producteur DEVRAIT conserver durablement les avis de retrait minimaux pour les Publications déjà annoncées. Le cahier autorise leur présence temporaire : aucun délai universel n’est imposé. S’ils sont supprimés, un consommateur resté longtemps hors ligne peut ne jamais recevoir l’avis. L’absence seule ne permet toujours pas de conclure au retrait.</p>
+<p>Un consommateur garde localement les informations nécessaires à ses favoris, positions et décisions. Une impossibilité de lecture n’est pas une instruction d’effacer la bibliothèque. Le protocole n’impose pas de stockage durable des œuvres.</p>
+<h2 id="section-11">10 Relations et déplacements</h2>
+<h3>10.1 Références et base</h3>
+<p>Chaque référence relative est résolue contre l’adresse du document Feed qui la contient, après les redirections HTTP. Elle n’est jamais résolue contre le nom de Série, le dossier supposé du Canal, publisher.url ou l’adresse du Collector. Les ../ sont autorisés et nécessaires au lien parent.</p>
+<p>Les références suivent la syntaxe URI de RFC 3986 : les espaces, contrôles, antislashs et caractères nécessitant un encodage ne sont pas des raccourcis de chemins de fichiers. Ils doivent être représentés correctement, notamment par encodage pour cent. L’URL résultante utilise HTTP(S), possède un hôte et ne contient pas de nom d’utilisateur ni de mot de passe. Une adresse de Feed ou moved_to désigne le document JSON entier, sans fragment. Une page de lecture PEUT avoir un fragment.</p>
+<p>Sur Internet, les règles HTTPS de la section 11 s’appliquent. Une importation de fichiers locaux doit recevoir explicitement sa base de résolution dans le contexte de l’import. Cette base n’est pas un nouveau champ de Feed. Faute de base, les références relatives restent non résolues et le consommateur le signale ; il n’invente pas d’adresse. Les chemins de fichiers locaux ne sont pas autorisés comme valeurs d’URL dans les Feed.</p>
+<p>Exemple : dans <a href="https://aube.example/bd/series/les-lucioles/feed.json">https://aube.example/bd/series/les-lucioles/feed.json</a>, ../../feed.json désigne <a href="https://aube.example/bd/feed.json">https://aube.example/bd/feed.json</a> et channels/strips/media/001.png désigne <a href="https://aube.example/bd/series/les-lucioles/channels/strips/media/001.png">https://aube.example/bd/series/les-lucioles/channels/strips/media/001.png</a>.</p>
+<h3>10.2 Concordance</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Frontière</th>
+<th>Vérification obligatoire</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Index Publisher → Feed Série</td>
+<td>publisher.id parent = publisher.id enfant, et series[].id index = series.id enfant.</td>
+</tr>
+<tr>
+<td>Feed Série → Feed Publisher</td>
+<td>publisher.id référence = publisher.id parent ; l’index actif doit référencer la même series.id.</td>
+</tr>
+<tr>
+<td>Source moved → destination</td>
+<td>Même publisher.id, protocol compatible et cible de type Feed Publisher.</td>
+</tr>
+<tr>
+<td>Série → Canal → Publication imbriqués</td>
+<td>Appartenance structurelle ; aucune répétition des IDs parent exigée.</td>
+</tr>
+</tbody></table></div>
+<p>Une adresse de retour peut employer une autre écriture relative ou suivre une redirection ; l’égalité textuelle de ces URLs n’est pas l’identité. Une relation active cohérente doit finalement retrouver les mêmes objets. Si le parent est momentanément inaccessible, la relation reste non vérifiée ; le client ne fabrique pas un parent et peut conserver ses informations antérieures.</p>
+<p>Une discordance d’ID provoque le refus ou l’isolation de la relation, sans remplacement de l’entité connue. Un écart de titre ou de date peut provenir d’un déploiement non atomique ou d’un cache : il est signalé et une nouvelle actualisation est possible. Il ne devient ni une migration ni un retrait implicite.</p>
+<p>L’index peut porter un avis withdrawn valide pour une Série déjà identifiée même si le Feed Série n’est plus disponible. L’index et le Feed Série DOIVENT déclarer des états cohérents ; une contradiction ne réactive pas automatiquement un retrait reçu.</p>
+<h3>10.3 Migration du Publisher</h3>
+<ol>
+<li>Recevoir publisher.status = moved et publisher.moved_to depuis la source du Publisher déjà suivie.</li>
+<li>Résoudre et contrôler cette URL comme toute URL de Feed.</li>
+<li>Charger la cible sans transmettre d’autorisation d’une autre origine ; vérifier protocol, version, forme Publisher et le même publisher.id.</li>
+<li>Si la cible est elle-même moved, poursuivre en détectant les boucles. Les limites locales de redirections sont explicites et ne constituent pas une migration réussie.</li>
+<li>Après vérification d’une cible finale cohérente, mémoriser la nouvelle adresse ; préserver les IDs et les états personnels qui s’y rattachent.</li>
+</ol>
+<p>Une panne, une boucle, une version incompatible ou un ID différent interrompt la migration en conservant les données précédentes. Un simple HTTP 301 ne remplace pas les vérifications d’identité. Un ancien avis moved avec series: [] n’annonce pas le retrait de tout le catalogue.</p>
+<p>Les IDs ne sont pas des signatures. Deux sources indépendantes revendiquant un même ID ne sont pas fusionnées arbitrairement : la relation, la provenance et le chemin de migration doivent être vérifiés. La V1 ne fournit pas d’authentification cryptographique.</p>
+<h2 id="section-12">11 Transport Web</h2>
+<p>Un hébergement statique suffit pour les contenus PUBLIC. Les noms des dossiers sont libres et ne sont pas des identifiants. Aucun nom de domaine, serveur, proxy, API ou compte Eigrutel n’est nécessaire.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Document ou ressource</th>
+<th>Exigence de publication</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Feed JSON Internet</td>
+<td>HTTPS et Content-Type application/json.</td>
+</tr>
+<tr>
+<td>Feed public destiné aux Collectors Web externes</td>
+<td>CORS permettant sa lecture sans identité du lecteur.</td>
+</tr>
+<tr>
+<td>Médias et miniatures pour une lecture Web HTTPS</td>
+<td>Ressources chargeables en HTTPS ; CORS recommandé.</td>
+</tr>
+<tr>
+<td>Image JPEG, PNG, WebP</td>
+<td>Content-Type cohérent : image/jpeg, image/png, image/webp ; les octets doivent correspondre.</td>
+</tr>
+<tr>
+<td>RSS Internet</td>
+<td>HTTPS ; Content-Type application/rss+xml ; URLs internes absolues.</td>
+</tr>
+<tr>
+<td>Développement local</td>
+<td>HTTP permis sur localhost et adresses de boucle locale ; aucun autre HTTP de Feed Internet conforme.</td>
+</tr>
+</tbody></table></div>
+<p>Pour un Feed public lu sans identifiants, Access-Control-Allow-Origin: * permet l’agrégation depuis des origines externes. Une réponse réservée à l’origine du site source ne satisfait pas cet objectif général. Les réponses utiles, y compris les réponses revalidées, doivent permettre l’accès du navigateur. CORS ne constitue pas une autorisation de lecture d’un contenu protégé.</p>
+<p>Un Reader installé sur le même site peut fonctionner alors que l’agrégation externe échoue. Un diagnostic DOIT distinguer l’erreur CORS, l’erreur HTTP, une URL non HTTPS et une structure JSON invalide. Aucun proxy central obligatoire n’est prévu pour contourner la configuration de l’hébergeur.</p>
+<p>Le serveur PEUT utiliser ETag, Last-Modified, compression et cache HTTP. Ces mécanismes ne remplacent ni les IDs ni updated_at. Les producteurs DEVRAIENT déployer un ensemble cohérent et conserver les anciennes ressources le temps nécessaire à leurs mises à jour ; le consommateur doit supporter une incohérence temporaire sans supprimer sa bibliothèque.</p>
+<h2 id="section-13">12 Versions et extensions</h2>
+<h3>12.1 Version de protocole</h3>
+<p>protocol vaut exactement comic-feed. version est une chaîne majeur.mineur, sans zéro initial superflu : 1.0 pour cette édition. generated_by décrit un logiciel et ne détermine jamais la compatibilité.</p>
+<p>Un producteur 1.0 DOIT respecter les valeurs de cette édition. Les versions 1.x ajoutent des possibilités compatibles sans rendre obligatoires de nouveaux champs pour les documents existants. Une version majeure inconnue est signalée et son contenu n’est pas interprété comme 1.0. Une version mineure ultérieure est examinée avec les règles connues ; le client ne prétend pas certifier toute une version qu’il ne connaît pas.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Comportement du consommateur 1.0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Champ facultatif inconnu</td>
+<td>Ignorer, éventuellement diagnostiquer ; ne pas l’exécuter.</td>
+</tr>
+<tr>
+<td>Champ obligatoire connu absent</td>
+<td>Objet invalide.</td>
+</tr>
+<tr>
+<td>Champ connu de mauvais type</td>
+<td>Objet invalide, même s’il est facultatif.</td>
+</tr>
+<tr>
+<td>Type de Canal inconnu</td>
+<td>Isoler ce Canal ; garder les métadonnées sûres et les Canaux pris en charge.</td>
+</tr>
+<tr>
+<td>Statut ou accès inconnu</td>
+<td>Isoler l’objet affecté ; ne jamais supposer active, published ou public.</td>
+</tr>
+<tr>
+<td>Version majeure incompatible</td>
+<td>Refuser l’interprétation du Feed en conservant les données locales précédentes.</td>
+</tr>
+</tbody></table></div>
+<p>Un type futur déclaré dans un document 1.0 ne respecte pas les valeurs de cette édition ; la tolérance du lecteur ne le rend pas conforme. Dans un document 1.x ultérieur, il est non pris en charge par ce lecteur, sans supposer que le producteur a violé cette version future.</p>
+<h3>12.2 Logiciel générateur</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Champ relatif à generated_by</th>
+<th>Type</th>
+<th>Présence</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>Texte non vide</td>
+<td>O dans cet objet</td>
+<td>Nom du logiciel, quel qu’il soit.</td>
+</tr>
+<tr>
+<td>version</td>
+<td>Texte non vide</td>
+<td>F</td>
+<td>Version du logiciel, indépendante de la version Comic Feed.</td>
+</tr>
+</tbody></table></div>
+<p>L’objet generated_by lui-même est facultatif. Son absence n’est jamais une erreur de conformité. Il n’accorde aucune confiance particulière à Eigrutel ou à un autre logiciel.</p>
+<h3>12.3 Extensions</h3>
+<p>extensions est facultatif sur tout objet standard défini dans ce dictionnaire, même lorsque la ligne n’est pas répétée dans son petit tableau. Il ne s’applique pas récursivement aux structures privées internes d’une extension.</p>
+<p>Sa valeur est un objet dont les clés sont des noms d’espace non vides, par exemple org.example.mafonction. La notation en domaine inversé est recommandée pour limiter les collisions ; elle ne déclenche ni résolution DNS ni requête. La valeur de chaque entrée est un objet JSON appartenant à cette extension.</p>
+<p>Une extension inconnue est ignorée. Une extension ne peut pas remplacer un champ obligatoire, changer l’accès effectif, rendre exécutable une donnée ni redéfinir le sens d’un champ standard. Un consommateur doit pouvoir interpréter le socle standard sans installer de code indiqué par le Feed.</p>
+<p>Les champs facultatifs standards ajoutés dans une future version compatible sont ignorés par les anciens consommateurs. Un champ obligatoire connu absent reste une erreur ; un champ facultatif connu présent avec un type incorrect reste une erreur. Un producteur 1.0 place ses ajouts expérimentaux dans extensions.</p>
+<h2 id="section-14">13 Validation et sécurité</h2>
+<h3>13.1 Ordre des contrôles</h3>
+<p>Le contrôle se fait en couches : JSON et encodage ; enveloppe et version ; types et champs ; IDs, dates et cardinalités ; règles entre objets ; concordance entre documents ; transitions connues ; transport et fichiers réellement servis. Un validateur hors ligne doit annoncer les couches qu’il a effectivement vérifiées.</p>
+<p>Les schémas JSON joints expriment la structure et plusieurs contraintes conditionnelles. Ils ne prouvent pas à eux seuls la validité du calendrier, BCP 47, l’absence de clés dupliquées avant décodage, la cohérence interdocuments, l’historique, le contenu réel des images ou CORS. Une option de validation format non activée ne vaut pas contrôle des dates.</p>
+<h3>13.2 Diagnostics</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Portée habituelle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CF_JSON</td>
+<td>JSON invalide, encodage ou caractères invalides.</td>
+<td>Feed.</td>
+</tr>
+<tr>
+<td>CF_DUPLICATE_KEY</td>
+<td>Deux membres de même nom dans un objet.</td>
+<td>Feed.</td>
+</tr>
+<tr>
+<td>CF_REQUIRED</td>
+<td>Champ obligatoire absent.</td>
+<td>Objet concerné ; Feed si enveloppe.</td>
+</tr>
+<tr>
+<td>CF_TYPE</td>
+<td>Mauvais type ou null non autorisé.</td>
+<td>Objet concerné.</td>
+</tr>
+<tr>
+<td>CF_ENUM</td>
+<td>Valeur fermée non conforme à la version déclarée.</td>
+<td>Objet concerné.</td>
+</tr>
+<tr>
+<td>CF_ID</td>
+<td>Préfixe ou UUID v4 incorrect.</td>
+<td>Objet concerné.</td>
+</tr>
+<tr>
+<td>CF_DUPLICATE_ID</td>
+<td>Définition multiple du même ID dans un état cohérent.</td>
+<td>Définitions et relations concernées.</td>
+</tr>
+<tr>
+<td>CF_DATE</td>
+<td>Date syntaxiquement ou civilement invalide.</td>
+<td>Objet concerné.</td>
+</tr>
+<tr>
+<td>CF_TIME_ORDER</td>
+<td>Horodatages de modification incohérents.</td>
+<td>Objets concernés.</td>
+</tr>
+<tr>
+<td>CF_MIXED_ACCESS</td>
+<td>Publication active sans accès explicite sous Canal mixed.</td>
+<td>Publication.</td>
+</tr>
+<tr>
+<td>CF_RESOURCE_COUNT</td>
+<td>Ressources absentes pour PUBLIC ou cardinalité incorrecte.</td>
+<td>Publication.</td>
+</tr>
+<tr>
+<td>CF_RESOURCE_FORMAT</td>
+<td>Octets non conformes aux formats d’image permis.</td>
+<td>Ressource et lecture affectée.</td>
+</tr>
+<tr>
+<td>CF_URL</td>
+<td>Référence d’URL mal formée, schéma interdit, identifiants intégrés.</td>
+<td>Lien ou objet concerné.</td>
+</tr>
+<tr>
+<td>CF_PARENT_ID</td>
+<td>publisher.id discordant entre documents.</td>
+<td>Relation.</td>
+</tr>
+<tr>
+<td>CF_SERIES_ID</td>
+<td>series.id discordant entre index et Feed Série.</td>
+<td>Relation.</td>
+</tr>
+<tr>
+<td>CF_INDEX_DATE</td>
+<td>Date d’index différente de la version Série chargée.</td>
+<td>Ensemble de versions ; actualisation à réessayer.</td>
+</tr>
+<tr>
+<td>CF_MOVE_ID</td>
+<td>Migration vers un autre publisher.id.</td>
+<td>Migration.</td>
+</tr>
+<tr>
+<td>CF_MOVE_LOOP</td>
+<td>Boucle de déplacement.</td>
+<td>Migration.</td>
+</tr>
+<tr>
+<td>CF_IMMUTABLE</td>
+<td>Changement interdit d’ID, type, appartenance ou publish_at après disponibilité.</td>
+<td>Transition.</td>
+</tr>
+<tr>
+<td>CF_REACTIVATION</td>
+<td>Contradiction avec un retrait explicite reçu.</td>
+<td>Transition à isoler.</td>
+</tr>
+<tr>
+<td>CF_RSS_POLICY</td>
+<td>rss sur Canal non public, URL requise absente ou élément inéligible.</td>
+<td>Sortie RSS.</td>
+</tr>
+<tr>
+<td>CF_RSS_XML</td>
+<td>XML/RSS mal formé ou correspondance invalide.</td>
+<td>Sortie RSS.</td>
+</tr>
+<tr>
+<td>NET_HTTPS</td>
+<td>Transport Internet ne satisfaisant pas HTTPS.</td>
+<td>Déploiement.</td>
+</tr>
+<tr>
+<td>NET_CORS</td>
+<td>Feed inaccessible à l’origine Web externe.</td>
+<td>Déploiement.</td>
+</tr>
+<tr>
+<td>NET_HTTP</td>
+<td>Ressource absente, non autorisée ou erreur réseau.</td>
+<td>Chargement ; jamais retrait implicite.</td>
+</tr>
+<tr>
+<td>UNSUPPORTED</td>
+<td>Type ou version non pris en charge.</td>
+<td>Capacité du consommateur.</td>
+</tr>
+</tbody></table></div>
+<p>Un résultat doit fournir le code, le document et le chemin de l’objet concerné lorsque disponibles. Un outil PEUT émettre plusieurs diagnostics pour une même erreur ; un exemple invalide peut donc spécifier un diagnostic principal sans interdire les diagnostics secondaires.</p>
+<p><strong>VALIDE</strong> signifie que les contrôles annoncés ont réussi. <strong>VALIDE AVEC AVERTISSEMENTS</strong> conserve cette conformité dans le périmètre vérifié, avec des éléments non bloquants. <strong>REFUSÉ</strong> signifie qu’un Feed, objet, lien ou changement est rejeté dans la portée précisée. Isoler une Publication défectueuse peut laisser d’autres Canaux lisibles, mais ne rend pas cette Publication conforme. Un contrôle réseau non réalisé est indiqué comme non vérifié, pas comme réussi.</p>
+<h3>13.3 Sécurité et confidentialité</h3>
+<p>Les Feed sont des données non fiables. Un consommateur NE DOIT PAS exécuter de script, iframe, plugin, modèle de code ou moteur indiqué par un Feed. Il affiche descriptions, titres, crédits, avertissements et messages comme du texte ; aucune interprétation HTML active n’est permise pour ces champs.</p>
+<p>javascript:, file:, data:, blob: et autres schémas hors HTTP(S) ne sont pas des références autorisées. Une extension ne crée pas d’exception. Un fichier annoncé comme image ne devient pas sûr par son seul suffixe. Les extensions de noms ou valeurs spéciales ne doivent pas altérer les objets internes d’une application lors de l’import.</p>
+<p>Les consommateurs contrôlent les redirections et les origines, cloisonnent les éventuelles autorisations et ne transmettent pas de secrets d’un Publisher à l’autre. Une implémentation serveur doit protéger ses accès réseau internes ; le droit d’utiliser localhost en développement n’autorise pas un Feed Internet à faire sonder arbitrairement un réseau privé.</p>
+<p>Les limites contre les abus de taille, de profondeur, de nombre de redirections ou de temps sont propres aux applications et doivent produire un diagnostic explicite. Elles ne sont pas annoncées comme limites universelles du protocole. Aucun bouton d’exécution forcée de contenu interdit n’est prévu.</p>
+<p>Un Feed PUBLIC ne requiert aucune identité du lecteur. Le protocole ne transmet pas sa bibliothèque globale ni une télémétrie individuelle. Les abonnements, favoris, positions et préférences restent sous le contrôle local du lecteur. Des services ajoutés dans un site Reader indépendant ne deviennent pas des fonctions de Comic Feed.</p>
+<h2 id="section-15">14 Sortie RSS</h2>
+<h3>14.1 Portée</h3>
+<p>La sortie standard est RSS 2.0, XML 1.0 en UTF-8, sans DTD ni entités externes. Elle est facultative et parallèle au Feed complet. Sa présence n’est pas une condition de validité de Comic Feed. Le générateur doit pouvoir la produire pour chaque Canal déclarant access.mode = public. Aucun RSS de Canal restricted ou mixed n’est défini par ce profil.</p>
+<p>channels[].rss localise le document XML ; channels[].url localise sa page de lecture. Toute Publication sélectionnée possède une url de lecture spécifique. Ces références sont résolues depuis le Feed Série, puis écrites en absolu dans le RSS. Ni l’ID ni l’adresse JSON ne sont utilisés à la place d’une page de lecture.</p>
+<h3>14.2 Sélection</h3>
+<p>À l’instant de génération T, une Publication est éligible si ses données sont valides, ses ancêtres ne sont pas retirés, son Publisher n’est pas moved, son status est scheduled ou published, publish_at ≤ T et son accès effectif est public. Une Publication future ou restreinte est exclue, même sous un Canal public. Un Canal retiré peut conserver un RSS vide. Les éléments éligibles ne sont pas dupliqués et un générateur DEVRAIT les écrire du plus récent au plus ancien, avec l’ID comme départage stable.</p>
+<p>La sélection de référence conserve tous les éléments éligibles. Un hébergeur PEUT limiter l’historique RSS pour ses besoins, en documentant cette limite hors Feed ; cette coupe n’est jamais un retrait Comic Feed.</p>
+<h3>14.3 Correspondance normative du profil</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Élément RSS</th>
+<th>Présence du profil</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rss/@version</td>
+<td>O</td>
+<td>2.0.</td>
+</tr>
+<tr>
+<td>channel</td>
+<td>O</td>
+<td>Un seul élément channel.</td>
+</tr>
+<tr>
+<td>channel/title</td>
+<td>O</td>
+<td>Nom lisible de Série et Canal ; libre composition.</td>
+</tr>
+<tr>
+<td>channel/link</td>
+<td>O</td>
+<td>URL absolue de channels[].url.</td>
+</tr>
+<tr>
+<td>channel/description</td>
+<td>O</td>
+<td>Présentation textuelle ; repli descriptif si la Série n’a pas de description.</td>
+</tr>
+<tr>
+<td>channel/language</td>
+<td>F</td>
+<td>Langue déclarée du Canal, à défaut celle de la Série.</td>
+</tr>
+<tr>
+<td>channel/lastBuildDate</td>
+<td>F</td>
+<td>Instant de modification du RSS ; peut être sa génération si son contenu change.</td>
+</tr>
+<tr>
+<td>item/guid</td>
+<td>O</td>
+<td>itm_ complet et attribut isPermaLink=&quot;false&quot;.</td>
+</tr>
+<tr>
+<td>item/title</td>
+<td>O</td>
+<td>Titre si non vide ; sinon libellé composé du titre du Canal et de la date publish_at.</td>
+</tr>
+<tr>
+<td>item/link</td>
+<td>O</td>
+<td>URL absolue de publications[].url.</td>
+</tr>
+<tr>
+<td>item/pubDate</td>
+<td>O</td>
+<td>publish_at, converti en date RSS UTC avec année à quatre chiffres.</td>
+</tr>
+<tr>
+<td>item/description</td>
+<td>F</td>
+<td>Présentation sûre, éventuellement miniature et lien de lecture.</td>
+</tr>
+</tbody></table></div>
+<p>Les dates sont rendues comme Mon, 05 Oct 2026 10:00:00 GMT, avec les noms de jour et mois anglais corrects ; les fractions de seconde sont omises. L’ordre peut utiliser la précision complète de Comic Feed, même si RSS n’affiche que la seconde. Le GUID ne change ni lors d’une correction ni lors d’un déplacement du site.</p>
+<h3>14.4 Texte et médias</h3>
+<p>Les titres et métadonnées sont échappés pour XML. Si le générateur compose une description HTML, il doit d’abord échapper les textes provenant du Feed pour HTML, puis sérialiser ce fragment comme texte XML ou CDATA. Une description du Feed n’est jamais copiée comme balisage de confiance. Le choix CDATA ne rend pas sûr un script ou un attribut actif.</p>
+<p>Le profil de référence emploie une description textuelle simple et peut ajouter une miniature PNG/JPEG avec un lien absolu. Il n’exige ni Media RSS ni extension Comic Feed. La lecture ordinaire repose sur item/link : un agrégateur n’est pas tenu d’intégrer les images, WebP ou les longs épisodes. Un enclosure est facultatif et n’est utilisable que si son URL, son type MIME et sa longueur réelle en octets sont connus ; il ne représente pas à lui seul un épisode segmenté. L’élément channel/image facultatif reste soumis aux formats et dimensions du standard RSS, distincts des visuels Comic Feed.</p>
+<h3>14.5 Programmation et corrections</h3>
+<p>Le générateur n’inclut pas d’élément futur. Pour le faire apparaître plus tard, le RSS doit être régénéré et redéployé après son échéance. Un fichier statique ne se modifie pas avec le temps, et RSS n’oblige pas tous les agrégateurs à masquer les dates futures. Cette limite ne modifie pas l’activation locale de Comic Feed.</p>
+<p>Une correction met à jour l’élément existant en conservant guid et pubDate. Une mention textuelle de correction PEUT être incluse ; le profil ne promet pas qu’un agrégateur la signalera. Un retrait supprime l’élément du RSS régénéré, mais ne peut forcer la suppression des copies déjà archivées par les agrégateurs. Aucun nouvel item de retrait n’est créé par ce profil. Comic Feed reste la source des états structurés.</p>
+<h2 id="section-16">Annexe A Catalogue des exemples</h2>
+<p>Le dossier demo contient trois Publishers indépendants : Atelier Aube, Éditions Brume et Studio Rivage. Les domaines .example sont réservés à l’illustration et ne correspondent pas à des sites hébergés. mapping.json associe chaque URL canonique fictive à son dossier local ; ce fichier est un outil de démonstration, pas un champ ni une dépendance du protocole.</p>
+<p>Aube illustre plusieurs Séries, un Canal strip et un Canal webtoon publics, une programmation, une correction signalée, un retrait minimal et une Série à accès mixte. Brume illustre deux Canaux webtoon de la même Série et des URLs absolues. Rivage illustre l’inactivité, les surcharges d’accès et un ancien Feed moved qui mène à son emplacement courant avec le même ID.</p>
+<p>Les fichiers scenarios présentent des versions successives de documents existants, avec un contexte de résolution et des résultats attendus dans manifest.json. Les scénarios incluent programmation avant/après échéance, correction silencieuse, correction signalée et retrait. Les IDs conservés y sont intentionnels. Les dossiers invalid et compatibility sont distincts des références valides.</p>
+<h2 id="section-17">Annexe B Exemples invalides</h2>
+<p>invalid/manifest.json décrit chaque exemple et le diagnostic principal attendu, ainsi que son contexte et, si nécessaire, le document parent ou l’état antérieur. Les cas syntaxiques sont stockés avec l’extension .invalid.json pour être inspectables sans être confondus avec des références valides. Les cas compatibility décrivent une capacité de lecture ; ils ne sont pas présentés comme des erreurs JSON.</p>
+<h2 id="section-18">Annexe C Arborescence et utilisation</h2>
+<p>README.md décrit l’ouverture de SPECIFICATION.html, les dossiers de chaque Publisher et les emplacements de médias. Les images sont des fichiers de test sans œuvre réelle. Les pages HTML sont des cibles factices pour les URLs de lecture RSS, sans application Reader.</p>
+<p>Les chemins sont relatifs à l’intérieur des packages quand cela est pertinent. Pour un hébergement réel, les URLs absolues fictives et le contenu absolu des RSS doivent être remplacés ou régénérés à partir des véritables bases. Les tests HTTPS/CORS sur plusieurs origines réelles relèvent de l’étape de déploiement et ne sont pas prouvés par l’ouverture des fichiers locaux.</p>
+<h2 id="section-19">Annexe D Références et provenance</h2>
+<p>Le cahier des charges Comic Feed 1.0 du 24 septembre 2026, la décision RSS et les précisions P1 à P7 validées le 5 octobre constituent la provenance de cette édition. Le lecteur n’a pas besoin du cahier pour appliquer les règles ci-dessus.</p>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8259">RFC 8259 JSON</a>.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc3339">RFC 3339 Dates Internet</a>, selon le profil explicite de la section 3.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9562.html">RFC 9562 UUID</a>.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc5646.html">RFC 5646 Langues BCP 47</a>.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc3986">RFC 3986 Références URI</a>.</li>
+<li><a href="https://fetch.spec.whatwg.org/#http-cors-protocol">Fetch Standard et CORS</a>.</li>
+<li><a href="https://www.rssboard.org/rss-specification">RSS 2.0</a>.</li>
+<li><a href="https://www.rssboard.org/rss-profile">RSS Best Practices Profile</a>, complément informatif.</li>
+<li><a href="https://www.rssboard.org/rss-encoding-examples">RSS Encoding Examples</a>, complément informatif.</li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-core">JSON Schema 2020-12</a>, pour les schémas d’accompagnement.</li>
+</ul>
+</main></div></body></html>

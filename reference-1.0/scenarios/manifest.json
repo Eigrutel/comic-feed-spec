@@ -1,0 +1,88 @@
+{
+  "reference_instant": "2026-10-05T10:00:00Z",
+  "note": "États alternatifs résolus avec leur contexte ; ne pas fusionner leurs IDs.",
+  "scenarios": [
+    {
+      "name": "correction-silencieuse",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "publisher_url": "https://aube.example/bd/feed.json",
+      "before": "scenarios/correction-silencieuse/before-series.json",
+      "after": "scenarios/correction-silencieuse/after-series.json",
+      "before_publisher": "scenarios/correction-silencieuse/before-publisher.json",
+      "after_publisher": "scenarios/correction-silencieuse/after-publisher.json",
+      "same_publication_id": "itm_fc1a8cd0-d554-4d4e-87ae-e635cb81396c",
+      "other_documents": [
+        {
+          "url": "https://aube.example/bd/series/carnets/feed.json",
+          "file": "scenarios/correction-silencieuse/carnets-context.json"
+        },
+        {
+          "url": "https://aube.example/bd/series/archive/feed.json",
+          "file": "scenarios/correction-silencieuse/archive-context.json"
+        }
+      ]
+    },
+    {
+      "name": "correction-signalee",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "publisher_url": "https://aube.example/bd/feed.json",
+      "before": "scenarios/correction-signalee/before-series.json",
+      "after": "scenarios/correction-signalee/after-series.json",
+      "before_publisher": "scenarios/correction-signalee/before-publisher.json",
+      "after_publisher": "scenarios/correction-signalee/after-publisher.json",
+      "same_publication_id": "itm_fc1a8cd0-d554-4d4e-87ae-e635cb81396c",
+      "other_documents": [
+        {
+          "url": "https://aube.example/bd/series/carnets/feed.json",
+          "file": "scenarios/correction-signalee/carnets-context.json"
+        },
+        {
+          "url": "https://aube.example/bd/series/archive/feed.json",
+          "file": "scenarios/correction-signalee/archive-context.json"
+        }
+      ]
+    },
+    {
+      "name": "retrait",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "publisher_url": "https://aube.example/bd/feed.json",
+      "before": "scenarios/retrait/before-series.json",
+      "after": "scenarios/retrait/after-series.json",
+      "before_publisher": "scenarios/retrait/before-publisher.json",
+      "after_publisher": "scenarios/retrait/after-publisher.json",
+      "same_publication_id": "itm_fc1a8cd0-d554-4d4e-87ae-e635cb81396c",
+      "other_documents": [
+        {
+          "url": "https://aube.example/bd/series/carnets/feed.json",
+          "file": "scenarios/retrait/carnets-context.json"
+        },
+        {
+          "url": "https://aube.example/bd/series/archive/feed.json",
+          "file": "scenarios/retrait/archive-context.json"
+        }
+      ]
+    },
+    {
+      "name": "programmation",
+      "document": "demo/aube/series/les-lucioles/feed.json",
+      "publication_id": "itm_10e143a6-2b04-44bc-8359-f0a7d73b5c57",
+      "evaluations": [
+        {
+          "now": "2026-10-10T07:59:59Z",
+          "available": false
+        },
+        {
+          "now": "2026-10-10T08:00:00Z",
+          "available": true
+        }
+      ],
+      "json_rewrite_required": false
+    },
+    {
+      "name": "publisher-deplace",
+      "source": "demo/rivage-ancien/feed.json",
+      "target": "demo/rivage/feed.json",
+      "same_publisher_id": "pub_834ddb11-589a-4c28-b7d3-200dcd190a4e"
+    }
+  ]
+}

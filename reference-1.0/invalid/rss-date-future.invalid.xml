@@ -1,0 +1,23 @@
+<rss version="2.0">
+  <channel>
+    <title>Les Lucioles / strips</title>
+    <link>https://aube.example/bd/series/les-lucioles/channels/strips/index.html</link>
+    <description>Série fictive destinée à vérifier les échanges Comic Feed.</description>
+    <language>fr</language>
+    <lastBuildDate>Mon, 05 Oct 2026 10:00:00 GMT</lastBuildDate>
+    <item>
+      <guid isPermaLink="false">itm_10e143a6-2b04-44bc-8359-f0a7d73b5c57</guid>
+      <title>Exemple aube-001</title>
+      <link>https://aube.example/bd/series/les-lucioles/channels/strip/read/aube-programme.html</link>
+      <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+      <description>Exemple de publication Comic Feed. </description>
+    </item>
+    <item>
+      <guid isPermaLink="false">itm_c0fb5faf-a248-4b02-9d78-7effd38c4418</guid>
+      <title>Exemple aube-corrige</title>
+      <link>https://aube.example/bd/series/les-lucioles/channels/strip/read/aube-corrige.html</link>
+      <pubDate>Thu, 01 Oct 2026 08:00:00 GMT</pubDate>
+      <description>Exemple de publication Comic Feed. Correction du lettrage, sans changement de Publication.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,43 @@
+{
+  "instant": "2026-10-05T10:00:00Z",
+  "publishers": [
+    {
+      "name": "Atelier Aube",
+      "file": "demo/aube/feed.json",
+      "id": "pub_d628cd5f-9064-4958-be04-9977f72d4181"
+    },
+    {
+      "name": "Éditions Brume",
+      "file": "demo/brume/feed.json",
+      "id": "pub_16fb77eb-272d-4781-9bf7-e7e65c9bb2b1"
+    },
+    {
+      "name": "Studio Rivage",
+      "file": "demo/rivage/feed.json",
+      "id": "pub_834ddb11-589a-4c28-b7d3-200dcd190a4e"
+    }
+  ],
+  "moved_publisher": "demo/rivage-ancien/feed.json",
+  "series": [
+    {
+      "file": "demo/aube/series/les-lucioles/feed.json",
+      "id": "ser_7070088a-b0a4-4e8e-8885-91fce1f06511"
+    },
+    {
+      "file": "demo/aube/series/carnets/feed.json",
+      "id": "ser_da741ed9-8832-40c7-ac0c-c64de1ea4389"
+    },
+    {
+      "file": "demo/aube/series/archive/feed.json",
+      "id": "ser_5fa6ae75-ac86-42f5-ba1a-c14d25b2802d"
+    },
+    {
+      "file": "demo/brume/series/brume-haute/feed.json",
+      "id": "ser_544d6c7e-9059-4b2e-a663-74ff7c210030"
+    },
+    {
+      "file": "demo/rivage/series/routes/feed.json",
+      "id": "ser_1b6fc613-8b8c-426b-a62f-6ba4067ec049"
+    }
+  ]
+}

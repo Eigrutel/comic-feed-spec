@@ -1,0 +1,181 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "series": {
+    "id": "ser_7070088a-b0a4-4e8e-8885-91fce1f06511",
+    "title": "Les Lucioles",
+    "description": "Série fictive destinée à vérifier les échanges Comic Feed.",
+    "language": "fr",
+    "images": {
+      "cover": "images/cover.png",
+      "banner": "images/banner.webp"
+    },
+    "credits": [
+      {
+        "name": "Alex Exemple",
+        "role": "Dessin",
+        "id": "credit-local-1"
+      },
+      {
+        "name": "Camille Démo",
+        "role": "Scénario"
+      }
+    ],
+    "content_rating": "Tout public"
+  },
+  "publisher": {
+    "id": "pub_d628cd5f-9064-4958-be04-9977f72d4181",
+    "feed": "../../feed.json"
+  },
+  "updated_at": "2026-10-05T10:00:00Z",
+  "channels": [
+    {
+      "id": "chn_99b7a2ca-3b8b-4f21-b16f-744437493082",
+      "type": "strip",
+      "title": "strips",
+      "language": "fr",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_fc1a8cd0-d554-4d4e-87ae-e635cb81396c",
+          "status": "published",
+          "publish_at": "2026-10-01T10:00:00+02:00",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple aube-001",
+          "thumbnail": "channels/strip/thumbnails/aube-001.png",
+          "url": "channels/strip/read/aube-001.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "javascript:alert(1)"
+            }
+          ]
+        },
+        {
+          "id": "itm_c0fb5faf-a248-4b02-9d78-7effd38c4418",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple aube-corrige",
+          "thumbnail": "channels/strip/thumbnails/aube-corrige.png",
+          "url": "channels/strip/read/aube-corrige.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/strip/media/aube-corrige-01.jpg"
+            }
+          ],
+          "update_notice": {
+            "at": "2026-10-05T10:00:00Z",
+            "message": "Correction du lettrage, sans changement de Publication."
+          }
+        },
+        {
+          "id": "itm_10e143a6-2b04-44bc-8359-f0a7d73b5c57",
+          "status": "scheduled",
+          "publish_at": "2026-10-10T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple aube-programme",
+          "thumbnail": "channels/strip/thumbnails/aube-programme.png",
+          "url": "channels/strip/read/aube-programme.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/strip/media/aube-programme-01.webp"
+            }
+          ]
+        },
+        {
+          "id": "itm_f704c7b0-bb30-4879-9cca-3dff20e059d7",
+          "status": "withdrawn",
+          "updated_at": "2026-10-05T10:00:00Z"
+        },
+        {
+          "id": "itm_202bcfd3-90fc-4360-9169-3f0864d4fcde",
+          "status": "published",
+          "publish_at": "2026-10-11T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple aube-futur-published",
+          "thumbnail": "channels/strip/thumbnails/aube-futur-published.png",
+          "url": "channels/strip/read/aube-futur-published.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/strip/media/aube-futur-published-01.png"
+            }
+          ]
+        },
+        {
+          "id": "itm_c00b98f9-91ab-4ebe-88e8-7b176a6880f4",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple aube-restriction",
+          "thumbnail": "channels/strip/thumbnails/aube-restriction.png",
+          "url": "channels/strip/read/aube-restriction.html",
+          "access": {
+            "mode": "restricted"
+          }
+        }
+      ],
+      "url": "channels/strips/index.html",
+      "rss": "channels/strips/rss.xml"
+    },
+    {
+      "id": "chn_0c7bab38-bff2-4988-aa91-6cd191897994",
+      "type": "webtoon",
+      "title": "webtoons",
+      "language": "fr",
+      "updated_at": "2026-10-05T10:00:00Z",
+      "access": {
+        "mode": "public"
+      },
+      "publications": [
+        {
+          "id": "itm_515cd34e-884e-44d9-b2e2-08901073f43c",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple aube-episode-01",
+          "thumbnail": "channels/webtoon/thumbnails/aube-episode-01.png",
+          "url": "channels/webtoon/read/aube-episode-01.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/webtoon/media/aube-episode-01-01.png"
+            }
+          ]
+        },
+        {
+          "id": "itm_4909d52b-5a12-4d8b-8205-5e4fa14126b6",
+          "status": "published",
+          "publish_at": "2026-10-01T08:00:00Z",
+          "updated_at": "2026-10-05T10:00:00Z",
+          "title": "Exemple aube-episode-02",
+          "thumbnail": "channels/webtoon/thumbnails/aube-episode-02.png",
+          "url": "channels/webtoon/read/aube-episode-02.html",
+          "resources": [
+            {
+              "type": "image",
+              "src": "channels/webtoon/media/aube-episode-02-01.webp"
+            },
+            {
+              "type": "image",
+              "src": "channels/webtoon/media/aube-episode-02-02.webp"
+            }
+          ]
+        }
+      ],
+      "url": "channels/webtoons/index.html",
+      "rss": "channels/webtoons/rss.xml"
+    }
+  ],
+  "extensions": {
+    "org.example.note": {
+      "texte": "Extension inconnue pouvant être ignorée."
+    }
+  }
+}

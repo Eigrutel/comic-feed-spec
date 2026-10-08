@@ -1,0 +1,45 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "publisher": {
+    "id": "pub_d628cd5f-9064-4958-be04-9977f72d4181",
+    "name": "Atelier Aube",
+    "description": "Publisher indépendant fictif.",
+    "language": "fr",
+    "url": "index.html",
+    "images": {
+      "avatar": "images/avatar.png",
+      "banner": "images/banner.webp"
+    },
+    "type": "atelier"
+  },
+  "updated_at": "2026-10-04T10:00:00Z",
+  "series": [
+    {
+      "id": "ser_7070088a-b0a4-4e8e-8885-91fce1f06511",
+      "title": "Les Lucioles",
+      "feed": "series/les-lucioles/feed.json",
+      "updated_at": "2026-10-04T10:00:00Z",
+      "thumbnail": "series/les-lucioles/images/cover.png"
+    },
+    {
+      "id": "ser_da741ed9-8832-40c7-ac0c-c64de1ea4389",
+      "title": "Carnets des marges",
+      "feed": "series/carnets/feed.json",
+      "updated_at": "2026-09-30T08:00:00Z",
+      "thumbnail": "series/carnets/images/cover.png"
+    },
+    {
+      "id": "ser_5fa6ae75-ac86-42f5-ba1a-c14d25b2802d",
+      "title": "Ancien carnet",
+      "feed": "series/archive/feed.json",
+      "updated_at": "2026-09-30T08:00:00Z",
+      "thumbnail": "series/archive/images/cover.png",
+      "status": "withdrawn"
+    }
+  ],
+  "generated_by": {
+    "name": "Générateur des exemples",
+    "version": "1.0"
+  }
+}

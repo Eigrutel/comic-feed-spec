@@ -1,0 +1,12 @@
+{
+  "protocol": "comic-feed",
+  "version": "1.0",
+  "publisher": {
+    "id": "pub_834ddb11-589a-4c28-b7d3-200dcd190a4e",
+    "name": "Studio Rivage",
+    "status": "moved",
+    "moved_to": "https://aube.example/bd/feed.json"
+  },
+  "updated_at": "2026-10-05T10:00:00Z",
+  "series": []
+}

@@ -1,0 +1,629 @@
+{
+  "reference_instant": "2026-10-05T10:00:00Z",
+  "total": 79,
+  "passed": 79,
+  "failed": [],
+  "scope": "Contrôles internes hors ligne, schémas avec leurs mots-clés employés, dates, médias, URLs virtuelles, relations, historique et RSS. Aucun test réseau réel ni validateur tiers exécuté.",
+  "not_verified": [
+    "CORS et HTTPS sur des hébergements réels",
+    "Compatibilité observée dans des applications RSS réelles",
+    "Applications Reader, Admin et Collector",
+    "Validateur JSON Schema tiers complet"
+  ],
+  "results": [
+    {
+      "name": "schema-local-publisher",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "schema-local-series",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/aube/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/aube/series/archive/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/aube/series/carnets/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/aube/series/les-lucioles/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "rss:demo/aube/series/les-lucioles/channels/strips/rss.xml",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "rss:demo/aube/series/les-lucioles/channels/webtoons/rss.xml",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/brume/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/brume/series/brume-haute/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "rss:demo/brume/series/brume-haute/channels/episodes-fr/rss.xml",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "rss:demo/brume/series/brume-haute/channels/episodes-en/rss.xml",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/rivage/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/rivage/series/routes/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "rss:demo/rivage/series/routes/channels/ancienne-edition/rss.xml",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "reference:demo/rivage-ancien/feed.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "unicite-definitions-multi-publishers",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "invalide:json-tronque",
+      "passed": true,
+      "details": {
+        "expected": "CF_JSON",
+        "observed": [
+          "CF_JSON"
+        ]
+      }
+    },
+    {
+      "name": "invalide:cle-dupliquee",
+      "passed": true,
+      "details": {
+        "expected": "CF_DUPLICATE_KEY",
+        "observed": [
+          "CF_DUPLICATE_KEY"
+        ]
+      }
+    },
+    {
+      "name": "invalide:protocol-absent",
+      "passed": true,
+      "details": {
+        "expected": "CF_REQUIRED",
+        "observed": [
+          "CF_REQUIRED"
+        ]
+      }
+    },
+    {
+      "name": "invalide:version-numerique",
+      "passed": true,
+      "details": {
+        "expected": "CF_TYPE",
+        "observed": [
+          "CF_ENUM",
+          "CF_TYPE"
+        ]
+      }
+    },
+    {
+      "name": "invalide:prefixe-id",
+      "passed": true,
+      "details": {
+        "expected": "CF_ID",
+        "observed": [
+          "CF_ID",
+          "CF_SERIES_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:uuid-non-v4",
+      "passed": true,
+      "details": {
+        "expected": "CF_ID",
+        "observed": [
+          "CF_ID",
+          "CF_SERIES_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:id-majuscules",
+      "passed": true,
+      "details": {
+        "expected": "CF_ID",
+        "observed": [
+          "CF_ID",
+          "CF_SERIES_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:canal-duplique",
+      "passed": true,
+      "details": {
+        "expected": "CF_DUPLICATE_ID",
+        "observed": [
+          "CF_DUPLICATE_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:publication-dupliquee",
+      "passed": true,
+      "details": {
+        "expected": "CF_DUPLICATE_ID",
+        "observed": [
+          "CF_DUPLICATE_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:parent-feed-absent",
+      "passed": true,
+      "details": {
+        "expected": "CF_REQUIRED",
+        "observed": [
+          "CF_REQUIRED"
+        ]
+      }
+    },
+    {
+      "name": "invalide:parent-id-absent",
+      "passed": true,
+      "details": {
+        "expected": "CF_REQUIRED",
+        "observed": [
+          "CF_PARENT_ID",
+          "CF_REQUIRED"
+        ]
+      }
+    },
+    {
+      "name": "invalide:parent-id-discordant",
+      "passed": true,
+      "details": {
+        "expected": "CF_PARENT_ID",
+        "observed": [
+          "CF_PARENT_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:serie-id-discordant",
+      "passed": true,
+      "details": {
+        "expected": "CF_SERIES_ID",
+        "observed": [
+          "CF_SERIES_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:date-sans-fuseau",
+      "passed": true,
+      "details": {
+        "expected": "CF_DATE",
+        "observed": [
+          "CF_DATE"
+        ]
+      }
+    },
+    {
+      "name": "invalide:date-impossible",
+      "passed": true,
+      "details": {
+        "expected": "CF_DATE",
+        "observed": [
+          "CF_DATE"
+        ]
+      }
+    },
+    {
+      "name": "invalide:type-canal-inconnu-v1",
+      "passed": true,
+      "details": {
+        "expected": "CF_ENUM",
+        "observed": [
+          "CF_ENUM"
+        ]
+      }
+    },
+    {
+      "name": "invalide:brouillon-diffuse",
+      "passed": true,
+      "details": {
+        "expected": "CF_ENUM",
+        "observed": [
+          "CF_ENUM"
+        ]
+      }
+    },
+    {
+      "name": "invalide:acces-inconnu",
+      "passed": true,
+      "details": {
+        "expected": "CF_ENUM",
+        "observed": [
+          "CF_ENUM"
+        ]
+      }
+    },
+    {
+      "name": "invalide:mixed-sans-acces",
+      "passed": true,
+      "details": {
+        "expected": "CF_MIXED_ACCESS",
+        "observed": [
+          "CF_ENUM",
+          "CF_MIXED_ACCESS",
+          "CF_REQUIRED",
+          "CF_RSS_POLICY"
+        ]
+      }
+    },
+    {
+      "name": "invalide:publication-mixed",
+      "passed": true,
+      "details": {
+        "expected": "CF_ENUM",
+        "observed": [
+          "CF_ENUM"
+        ]
+      }
+    },
+    {
+      "name": "invalide:public-sans-ressources",
+      "passed": true,
+      "details": {
+        "expected": "CF_RESOURCE_COUNT",
+        "observed": [
+          "CF_REQUIRED",
+          "CF_RESOURCE_COUNT"
+        ]
+      }
+    },
+    {
+      "name": "invalide:strip-plusieurs-images",
+      "passed": true,
+      "details": {
+        "expected": "CF_RESOURCE_COUNT",
+        "observed": [
+          "CF_RESOURCE_COUNT",
+          "CF_STRUCTURE"
+        ]
+      }
+    },
+    {
+      "name": "invalide:webtoon-vide",
+      "passed": true,
+      "details": {
+        "expected": "CF_RESOURCE_COUNT",
+        "observed": [
+          "CF_RESOURCE_COUNT",
+          "CF_STRUCTURE"
+        ]
+      }
+    },
+    {
+      "name": "invalide:url-javascript",
+      "passed": true,
+      "details": {
+        "expected": "CF_URL",
+        "observed": [
+          "CF_URL"
+        ]
+      }
+    },
+    {
+      "name": "invalide:url-data",
+      "passed": true,
+      "details": {
+        "expected": "CF_URL",
+        "observed": [
+          "CF_URL"
+        ]
+      }
+    },
+    {
+      "name": "invalide:ressource-svg",
+      "passed": true,
+      "details": {
+        "expected": "CF_RESOURCE_FORMAT",
+        "observed": [
+          "CF_RESOURCE_FORMAT"
+        ]
+      }
+    },
+    {
+      "name": "invalide:html-deguise-en-jpeg",
+      "passed": true,
+      "details": {
+        "expected": "CF_RESOURCE_FORMAT",
+        "observed": [
+          "CF_RESOURCE_FORMAT"
+        ]
+      }
+    },
+    {
+      "name": "invalide:date-parent-anterieure",
+      "passed": true,
+      "details": {
+        "expected": "CF_TIME_ORDER",
+        "observed": [
+          "CF_INDEX_DATE",
+          "CF_TIME_ORDER"
+        ]
+      }
+    },
+    {
+      "name": "invalide:avis-apres-modification",
+      "passed": true,
+      "details": {
+        "expected": "CF_TIME_ORDER",
+        "observed": [
+          "CF_TIME_ORDER"
+        ]
+      }
+    },
+    {
+      "name": "invalide:rss-sur-canal-restricted",
+      "passed": true,
+      "details": {
+        "expected": "CF_RSS_POLICY",
+        "observed": [
+          "CF_ENUM",
+          "CF_RSS_POLICY"
+        ]
+      }
+    },
+    {
+      "name": "invalide:rss-sans-url-canal",
+      "passed": true,
+      "details": {
+        "expected": "CF_RSS_POLICY",
+        "observed": [
+          "CF_REQUIRED",
+          "CF_RSS_POLICY"
+        ]
+      }
+    },
+    {
+      "name": "invalide:rss-sans-url-publication",
+      "passed": true,
+      "details": {
+        "expected": "CF_RSS_POLICY",
+        "observed": [
+          "CF_RSS_POLICY"
+        ]
+      }
+    },
+    {
+      "name": "invalide:deplacement-sans-cible",
+      "passed": true,
+      "details": {
+        "expected": "CF_REQUIRED",
+        "observed": [
+          "CF_REQUIRED"
+        ]
+      }
+    },
+    {
+      "name": "invalide:deplacement-autre-publisher",
+      "passed": true,
+      "details": {
+        "expected": "CF_MOVE_ID",
+        "observed": [
+          "CF_MOVE_ID"
+        ]
+      }
+    },
+    {
+      "name": "invalide:deplacement-boucle",
+      "passed": true,
+      "details": {
+        "expected": "CF_MOVE_LOOP",
+        "observed": [
+          "CF_MOVE_LOOP"
+        ]
+      }
+    },
+    {
+      "name": "invalide:type-canal-modifie",
+      "passed": true,
+      "details": {
+        "expected": "CF_IMMUTABLE",
+        "observed": [
+          "CF_IMMUTABLE"
+        ]
+      }
+    },
+    {
+      "name": "invalide:reprogrammation-apres-publication",
+      "passed": true,
+      "details": {
+        "expected": "CF_IMMUTABLE",
+        "observed": [
+          "CF_IMMUTABLE"
+        ]
+      }
+    },
+    {
+      "name": "invalide:rss-date-future",
+      "passed": true,
+      "details": {
+        "expected": "CF_RSS_POLICY",
+        "observed": [
+          "CF_RSS_POLICY"
+        ]
+      }
+    },
+    {
+      "name": "invalide:rss-publication-restreinte",
+      "passed": true,
+      "details": {
+        "expected": "CF_RSS_POLICY",
+        "observed": [
+          "CF_RSS_POLICY"
+        ]
+      }
+    },
+    {
+      "name": "invalide:rss-lien-relatif",
+      "passed": true,
+      "details": {
+        "expected": "CF_RSS_XML",
+        "observed": [
+          "CF_RSS_XML"
+        ]
+      }
+    },
+    {
+      "name": "invalide:rss-guid-permalien",
+      "passed": true,
+      "details": {
+        "expected": "CF_RSS_XML",
+        "observed": [
+          "CF_RSS_XML"
+        ]
+      }
+    },
+    {
+      "name": "scenario:correction-silencieuse:before",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-index:correction-silencieuse:before",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario:correction-silencieuse:after",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-index:correction-silencieuse:after",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-id:correction-silencieuse",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario:correction-signalee:before",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-index:correction-signalee:before",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario:correction-signalee:after",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-index:correction-signalee:after",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-id:correction-signalee",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario:retrait:before",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-index:retrait:before",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario:retrait:after",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-index:retrait:after",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-id:retrait",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "programmation:2026-10-10T07:59:59Z",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "programmation:2026-10-10T08:00:00Z",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "scenario-migration-identite",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "compatibilite:compatibility/mineure-future.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "compatibilite:compatibility/type-futur.json",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "compatibilite:compatibility/majeure-future.json",
+      "passed": true,
+      "details": []
+    }
+  ]
+}

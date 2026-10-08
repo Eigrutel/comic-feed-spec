@@ -1,0 +1,21 @@
+{
+  "description": "Contexte de démonstration hors protocole. Aucun de ces domaines fictifs n’est hébergé.",
+  "origins": [
+    {
+      "base_url": "https://aube.example/bd/",
+      "directory": "demo/aube"
+    },
+    {
+      "base_url": "https://brume.example/",
+      "directory": "demo/brume"
+    },
+    {
+      "base_url": "https://rivage.example/catalogue/",
+      "directory": "demo/rivage"
+    },
+    {
+      "base_url": "https://archives-rivage.example/",
+      "directory": "demo/rivage-ancien"
+    }
+  ]
+}

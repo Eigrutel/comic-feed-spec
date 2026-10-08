@@ -1,0 +1,315 @@
+{
+  "note": "Diagnostic principal attendu ; des diagnostics secondaires peuvent accompagner la même erreur.",
+  "cases": [
+    {
+      "name": "json-tronque",
+      "file": "invalid/json-tronque.invalid.json",
+      "expected": "CF_JSON",
+      "scope": "document"
+    },
+    {
+      "name": "cle-dupliquee",
+      "file": "invalid/cle-dupliquee.invalid.json",
+      "expected": "CF_DUPLICATE_KEY",
+      "scope": "document"
+    },
+    {
+      "name": "protocol-absent",
+      "file": "invalid/protocol-absent.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_REQUIRED",
+      "scope": "document"
+    },
+    {
+      "name": "version-numerique",
+      "file": "invalid/version-numerique.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_TYPE",
+      "scope": "document"
+    },
+    {
+      "name": "prefixe-id",
+      "file": "invalid/prefixe-id.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_ID",
+      "scope": "document"
+    },
+    {
+      "name": "uuid-non-v4",
+      "file": "invalid/uuid-non-v4.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_ID",
+      "scope": "document"
+    },
+    {
+      "name": "id-majuscules",
+      "file": "invalid/id-majuscules.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_ID",
+      "scope": "document"
+    },
+    {
+      "name": "canal-duplique",
+      "file": "invalid/canal-duplique.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_DUPLICATE_ID",
+      "scope": "document"
+    },
+    {
+      "name": "publication-dupliquee",
+      "file": "invalid/publication-dupliquee.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_DUPLICATE_ID",
+      "scope": "document"
+    },
+    {
+      "name": "parent-feed-absent",
+      "file": "invalid/parent-feed-absent.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_REQUIRED",
+      "scope": "document"
+    },
+    {
+      "name": "parent-id-absent",
+      "file": "invalid/parent-id-absent.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_REQUIRED",
+      "scope": "document"
+    },
+    {
+      "name": "parent-id-discordant",
+      "file": "invalid/parent-id-discordant.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_PARENT_ID",
+      "scope": "relation",
+      "parent": "demo/aube/feed.json"
+    },
+    {
+      "name": "serie-id-discordant",
+      "file": "invalid/serie-id-discordant.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_SERIES_ID",
+      "scope": "relation",
+      "parent": "demo/aube/feed.json"
+    },
+    {
+      "name": "date-sans-fuseau",
+      "file": "invalid/date-sans-fuseau.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_DATE",
+      "scope": "document"
+    },
+    {
+      "name": "date-impossible",
+      "file": "invalid/date-impossible.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_DATE",
+      "scope": "document"
+    },
+    {
+      "name": "type-canal-inconnu-v1",
+      "file": "invalid/type-canal-inconnu-v1.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_ENUM",
+      "scope": "document"
+    },
+    {
+      "name": "brouillon-diffuse",
+      "file": "invalid/brouillon-diffuse.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_ENUM",
+      "scope": "document"
+    },
+    {
+      "name": "acces-inconnu",
+      "file": "invalid/acces-inconnu.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_ENUM",
+      "scope": "document"
+    },
+    {
+      "name": "mixed-sans-acces",
+      "file": "invalid/mixed-sans-acces.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_MIXED_ACCESS",
+      "scope": "document"
+    },
+    {
+      "name": "publication-mixed",
+      "file": "invalid/publication-mixed.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_ENUM",
+      "scope": "document"
+    },
+    {
+      "name": "public-sans-ressources",
+      "file": "invalid/public-sans-ressources.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RESOURCE_COUNT",
+      "scope": "document"
+    },
+    {
+      "name": "strip-plusieurs-images",
+      "file": "invalid/strip-plusieurs-images.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RESOURCE_COUNT",
+      "scope": "document"
+    },
+    {
+      "name": "webtoon-vide",
+      "file": "invalid/webtoon-vide.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RESOURCE_COUNT",
+      "scope": "document"
+    },
+    {
+      "name": "url-javascript",
+      "file": "invalid/url-javascript.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_URL",
+      "scope": "document"
+    },
+    {
+      "name": "url-data",
+      "file": "invalid/url-data.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_URL",
+      "scope": "document"
+    },
+    {
+      "name": "ressource-svg",
+      "file": "invalid/ressource-svg.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RESOURCE_FORMAT",
+      "scope": "document",
+      "resource_override": {
+        "https://invalid.example/interdit.svg": "invalid/media/interdit.svg"
+      }
+    },
+    {
+      "name": "html-deguise-en-jpeg",
+      "file": "invalid/html-deguise-en-jpeg.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RESOURCE_FORMAT",
+      "scope": "document",
+      "resource_override": {
+        "https://invalid.example/pseudo-image.jpg": "invalid/media/pseudo-image.jpg"
+      }
+    },
+    {
+      "name": "date-parent-anterieure",
+      "file": "invalid/date-parent-anterieure.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_TIME_ORDER",
+      "scope": "document"
+    },
+    {
+      "name": "avis-apres-modification",
+      "file": "invalid/avis-apres-modification.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_TIME_ORDER",
+      "scope": "document"
+    },
+    {
+      "name": "rss-sur-canal-restricted",
+      "file": "invalid/rss-sur-canal-restricted.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RSS_POLICY",
+      "scope": "document"
+    },
+    {
+      "name": "rss-sans-url-canal",
+      "file": "invalid/rss-sans-url-canal.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RSS_POLICY",
+      "scope": "document"
+    },
+    {
+      "name": "rss-sans-url-publication",
+      "file": "invalid/rss-sans-url-publication.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_RSS_POLICY",
+      "scope": "document"
+    },
+    {
+      "name": "deplacement-sans-cible",
+      "file": "invalid/deplacement-sans-cible.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_REQUIRED",
+      "scope": "document",
+      "base_context": "https://archives-rivage.example/feed.json"
+    },
+    {
+      "name": "deplacement-autre-publisher",
+      "file": "invalid/deplacement-autre-publisher.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_MOVE_ID",
+      "scope": "relation",
+      "base_context": "https://archives-rivage.example/feed.json"
+    },
+    {
+      "name": "deplacement-boucle",
+      "file": "invalid/deplacement-boucle.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_MOVE_LOOP",
+      "scope": "relation",
+      "base_context": "https://archives-rivage.example/feed.json"
+    },
+    {
+      "name": "type-canal-modifie",
+      "file": "invalid/type-canal-modifie.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_IMMUTABLE",
+      "scope": "transition",
+      "before": "scenarios/correction-silencieuse/before-series.json"
+    },
+    {
+      "name": "reprogrammation-apres-publication",
+      "file": "invalid/reprogrammation-apres-publication.invalid.json",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json",
+      "expected": "CF_IMMUTABLE",
+      "scope": "transition",
+      "before": "scenarios/correction-silencieuse/before-series.json"
+    },
+    {
+      "name": "rss-date-future",
+      "file": "invalid/rss-date-future.invalid.xml",
+      "kind": "rss",
+      "expected": "CF_RSS_POLICY",
+      "scope": "rss",
+      "series": "demo/aube/series/les-lucioles/feed.json",
+      "channel_id": "chn_99b7a2ca-3b8b-4f21-b16f-744437493082",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json"
+    },
+    {
+      "name": "rss-publication-restreinte",
+      "file": "invalid/rss-publication-restreinte.invalid.xml",
+      "kind": "rss",
+      "expected": "CF_RSS_POLICY",
+      "scope": "rss",
+      "series": "demo/aube/series/les-lucioles/feed.json",
+      "channel_id": "chn_99b7a2ca-3b8b-4f21-b16f-744437493082",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json"
+    },
+    {
+      "name": "rss-lien-relatif",
+      "file": "invalid/rss-lien-relatif.invalid.xml",
+      "kind": "rss",
+      "expected": "CF_RSS_XML",
+      "scope": "rss",
+      "series": "demo/aube/series/les-lucioles/feed.json",
+      "channel_id": "chn_99b7a2ca-3b8b-4f21-b16f-744437493082",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json"
+    },
+    {
+      "name": "rss-guid-permalien",
+      "file": "invalid/rss-guid-permalien.invalid.xml",
+      "kind": "rss",
+      "expected": "CF_RSS_XML",
+      "scope": "rss",
+      "series": "demo/aube/series/les-lucioles/feed.json",
+      "channel_id": "chn_99b7a2ca-3b8b-4f21-b16f-744437493082",
+      "base_url": "https://aube.example/bd/series/les-lucioles/feed.json"
+    }
+  ]
+}
